@@ -1,0 +1,41 @@
+{
+  "$schema": "https://code.claude.com/settings_schema.json",
+  "description": "Claude Code 学习项目配置",
+
+  "model": "claude-3-5-sonnet-20241022",
+  "permissionMode": "default",
+  "agent": null,
+
+  "allowedTools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Glob",
+    "Grep",
+    "Bash"
+  ],
+
+  "disallowedTools": [],
+
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/raven/Documents/devlop/all_in_ai/learn_claude"],
+      "disabled": true
+    }
+  },
+
+  "hooks": {},
+
+  "plugins": {
+    "enabled": [],
+    "disabled": [],
+    "config": {}
+  },
+
+  "systemPrompt": "你是一个帮助用户学习 Claude Code CLI 的助手。这个项目包含多个学习资源：shell 脚本游戏、网页游戏、文档和示例。",
+
+  "inlineAssistance": {
+    "enable": true
+  }
+}

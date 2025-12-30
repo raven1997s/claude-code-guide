@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 学习中心</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-terminal"></i>
+                <span>Claude Code 学习中心</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i> 首页
+                </a></li>
+                <li><a href="#game" class="nav-link" data-page="game">
+                    <i class="fas fa-gamepad"></i> 互动游戏
+                </a></li>
+                <li><a href="#reference" class="nav-link" data-page="reference">
+                    <i class="fas fa-book"></i> 命令参考
+                </a></li>
+                <li><a href="#cheatsheet" class="nav-link" data-page="cheatsheet">
+                    <i class="fas fa-clone"></i> 速查表
+                </a></li>
+                <li><a href="#commands" class="nav-link" data-page="commands">
+                    <i class="fas fa-code"></i> 斜杠命令
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="app">
+        <!-- 首页 -->
+        <div id="page-home" class="page active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-icon">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <h1>Claude Code 学习中心</h1>
+                    <p class="hero-subtitle">掌握 Claude Code CLI 命令的终极学习平台</p>
+                    <p class="hero-description">
+                        通过互动游戏、命令参考和速查表，快速学会 Claude Code 的所有常用命令
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-large" onclick="navigateTo('game')">
+                            <i class="fas fa-play"></i> 开始学习游戏
+                        </button>
+                        <button class="btn btn-secondary btn-large" onclick="navigateTo('reference')">
+                            <i class="fas fa-book"></i> 浏览命令参考
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="container">
+                    <h2 class="section-title">学习路径</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card" onclick="navigateTo('game')">
+                            <div class="feature-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <h3>互动游戏</h3>
+                            <p>25 个精心设计的关卡，通过模拟终端实践学习所有常用命令</p>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i> 25 个关卡</li>
+                                <li><i class="fas fa-check"></i> CLI 命令</li>
+                                <li><i class="fas fa-check"></i> 会话命令</li>
+                                <li><i class="fas fa-check"></i> 综合挑战</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" onclick="navigateTo('reference')">
+                            <div class="feature-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h3>命令参考</h3>
+                            <p>完整的 CLI 参数文档，深入了解每个选项的用法</p>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i> 完整参数列表</li>
+                                <li><i class="fas fa-check"></i> 实用示例</li>
+                                <li><i class="fas fa-check"></i> 详细说明</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" onclick="navigateTo('cheatsheet')">
+                            <div class="feature-icon">
+                                <i class="fas fa-clone"></i>
+                            </div>
+                            <h3>速查表</h3>
+                            <p>快速查找常用命令，适合已入门用户查阅</p>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i> 常用命令</li>
+                                <li><i class="fas fa-check"></i> 快捷键</li>
+                                <li><i class="fas fa-check"></i> 配置参考</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" onclick="navigateTo('commands')">
+                            <div class="feature-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>斜杠命令</h3>
+                            <p>掌握会话内命令，提升交互效率</p>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i> /help</li>
+                                <li><i class="fas fa-check"></i> /commit</li>
+                                <li><i class="fas fa-check"></i> /tasks</li>
+                                <li><i class="fas fa-check"></i> 更多...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">25</div>
+                            <div class="stat-label">游戏关卡</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">CLI 参数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">斜杠命令</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">免费学习</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏页面 -->
+        <div id="page-game" class="page">
+            <div id="main-menu" class="screen active">
+                <div class="container">
+                    <div class="logo">
+                        <i class="fas fa-terminal"></i>
+                        <h1>Claude Code 冒险</h1>
+                        <p>互动式学习游戏 - 在浏览器中体验真实终端</p>
+                    </div>
+
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <span>学习进度</span>
+                            <span id="progress-text">0/25 关卡</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="category-tabs">
+                        <button class="tab-btn active" data-category="all">全部关卡</button>
+                        <button class="tab-btn" data-category="cli">
+                            <i class="fas fa-terminal"></i> CLI 命令
+                        </button>
+                        <button class="tab-btn" data-category="session">
+                            <i class="fas fa-comments"></i> 交互会话
+                        </button>
+                        <button class="tab-btn" data-category="git">
+                            <i class="fas fa-code-branch"></i> Git & 提交
+                        </button>
+                        <button class="tab-btn" data-category="mixed">
+                            <i class="fas fa-trophy"></i> 综合挑战
+                        </button>
+                    </div>
+
+                    <div class="level-grid" id="level-grid">
+                        <!-- 关卡将通过 JS 动态生成 -->
+                    </div>
+
+                    <button class="btn btn-danger" onclick="resetProgress()">
+                        <i class="fas fa-redo"></i> 重置进度
+                    </button>
+                </div>
+            </div>
+
+            <!-- 关卡界面 -->
+            <div id="level-screen" class="screen">
+                <div class="level-container">
+                    <div class="level-header">
+                        <button class="btn-back" onclick="showMainMenu()">
+                            <i class="fas fa-arrow-left"></i> 返回
+                        </button>
+                        <div class="level-badges">
+                            <span class="level-badge" id="level-badge">关卡 1</span>
+                            <span class="category-badge" id="category-badge">
+                                <i class="fas fa-terminal"></i> CLI 命令
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="level-content-wrapper">
+                        <div class="level-info">
+                            <div class="level-title" id="level-title">
+                                <i class="fas fa-flag"></i>
+                                <span>初出茅庐</span>
+                            </div>
+
+                            <div class="level-section">
+                                <h3><i class="fas fa-bullseye"></i> 任务目标</h3>
+                                <p id="level-objective">学会启动 Claude Code 并查看版本</p>
+                            </div>
+
+                            <div class="level-section">
+                                <h3><i class="fas fa-book"></i> 知识点</h3>
+                                <div id="level-knowledge" class="knowledge-box">
+                                    <!-- 知识点将通过 JS 插入 -->
+                                </div>
+                            </div>
+
+                            <div class="level-section">
+                                <h3><i class="fas fa-gamepad"></i> 实战任务</h3>
+                                <div id="level-task" class="task-box">
+                                    <!-- 任务内容将通过 JS 插入 -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="terminal-wrapper">
+                            <div class="terminal-header">
+                                <span class="terminal-title">
+                                    <i class="fas fa-terminal"></i> 模拟终端
+                                </span>
+                                <div class="terminal-controls">
+                                    <span class="terminal-dot red"></span>
+                                    <span class="terminal-dot yellow"></span>
+                                    <span class="terminal-dot green"></span>
+                                </div>
+                            </div>
+                            <div class="terminal-body" id="terminal-body">
+                                <div class="terminal-output" id="terminal-output">
+                                    <div class="terminal-line">
+                                        <span class="prompt">$</span>
+                                        <span class="cursor">_</span>
+                                    </div>
+                                </div>
+                                <div class="terminal-input-line">
+                                    <span class="prompt">$</span>
+                                    <input
+                                        type="text"
+                                        id="terminal-input"
+                                        class="terminal-input"
+                                        placeholder="输入命令..."
+                                        autocomplete="off"
+                                        autofocus
+                                    >
+                                </div>
+                            </div>
+                            <div class="terminal-footer">
+                                <button class="btn-terminal" onclick="executeCommand()">
+                                    <i class="fas fa-play"></i> 执行
+                                </button>
+                                <button class="btn-terminal" onclick="clearTerminal()">
+                                    <i class="fas fa-eraser"></i> 清空
+                                </button>
+                                <span class="terminal-hint">按 Enter 执行</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-success" id="btn-complete" onclick="completeLevel()" disabled>
+                            <i class="fas fa-lock"></i> 完成任务 (0/1)
+                        </button>
+                        <button class="btn btn-secondary" onclick="showHint()">
+                            <i class="fas fa-question-circle"></i> 显示提示
+                        </button>
+                        <button class="btn btn-warning" onclick="skipLevel()">
+                            <i class="fas fa-forward"></i> 跳过此关
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 提示弹窗 -->
+            <div id="hint-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-lightbulb"></i> 提示</h3>
+                        <button class="btn-close" onclick="closeHint()">×</button>
+                    </div>
+                    <div class="modal-body" id="hint-text">
+                        <!-- 提示内容 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="closeHint()">知道了</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 完成弹窗 -->
+            <div id="complete-modal" class="modal">
+                <div class="modal-content modal-success">
+                    <div class="success-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h2>🎉 恭喜完成！</h2>
+                    <p id="complete-message">你已经掌握了这个知识点</p>
+                    <button class="btn btn-primary" onclick="nextLevel()">
+                        继续下一关 <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 命令参考页面 -->
+        <div id="page-reference" class="page">
+            <div class="doc-container">
+                <div class="doc-header">
+                    <h1><i class="fas fa-book"></i> CLI 参数完整参考</h1>
+                    <p>Claude Code 支持丰富的命令行参数，用于控制会话行为</p>
+                </div>
+
+                <!-- 搜索组件 -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input
+                            type="text"
+                            id="reference-search-input"
+                            class="search-input"
+                            placeholder="搜索命令或中文描述..."
+                            autocomplete="off"
+                        >
+                        <button class="search-clear" id="reference-search-clear" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="search-mode-toggle">
+                        <button class="mode-btn active" data-mode="auto" title="自动检测">
+                            <i class="fas fa-magic"></i> 自动
+                        </button>
+                        <button class="mode-btn" data-mode="command" title="按命令搜索">
+                            <i class="fas fa-code"></i> 命令
+                        </button>
+                        <button class="mode-btn" data-mode="chinese" title="按中文搜索">
+                            <i class="fas fa-language"></i> 中文
+                        </button>
+                        <button class="mode-btn" data-mode="both" title="双向搜索">
+                            <i class="fas fa-exchange-alt"></i> 全部
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 搜索结果 -->
+                <div id="reference-search-results" class="search-results" style="display: none;">
+                    <!-- 动态生成搜索结果 -->
+                </div>
+
+                <!-- 默认内容 -->
+                <div class="doc-content" id="reference-default-content">
+                    <div class="doc-section">
+                        <h2>基础用法</h2>
+                        <div class="code-block">
+                            <code>claude [options] [command] [prompt]</code>
+                        </div>
+                    </div>
+
+                    <div class="doc-section">
+                        <h2>启动模式</h2>
+                        <table class="param-table">
+                            <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>简写</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>--print</code></td>
+                                    <td><code>-p</code></td>
+                                    <td>打印响应后退出（非交互模式）</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--continue</code></td>
+                                    <td><code>-c</code></td>
+                                    <td>继续最近的对话</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--resume [id]</code></td>
+                                    <td><code>-r</code></td>
+                                    <td>恢复会话，可选指定会话 ID</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--fork-session</code></td>
+                                    <td></td>
+                                    <td>恢复时创建新会话而非复用原 ID</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="example-block">
+                            <h4>示例</h4>
+                            <pre><code># 非交互模式
+claude -p "列出当前目录文件"
+
+# 继续上次对话
+claude -c
+
+# 恢复特定会话
+claude -r abc123-def4-5678</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="doc-section">
+                        <h2>模型与 Agent</h2>
+                        <table class="param-table">
+                            <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>--model &lt;model&gt;</code></td>
+                                    <td>指定模型（sonnet/opus/haiku 或完整名称）</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--agent &lt;agent&gt;</code></td>
+                                    <td>使用特定 Agent</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--fallback-model &lt;model&gt;</code></td>
+                                    <td>当主模型过载时的备用模型</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="example-block">
+                            <h4>示例</h4>
+                            <pre><code># 使用模型别名
+claude --model sonnet
+claude --model haiku
+
+# 使用自定义 Agent
+claude --agent reviewer "审查这段代码"
+
+# 设置备用模型
+claude --model sonnet --fallback-model haiku</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="doc-section">
+                        <h2>权限与安全</h2>
+                        <table class="param-table">
+                            <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>--permission-mode &lt;mode&gt;</code></td>
+                                    <td>权限模式（default/acceptEdits/bypassPermissions）</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--allowed-tools &lt;tools...&gt;</code></td>
+                                    <td>允许的工具列表</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--disallowed-tools &lt;tools...&gt;</code></td>
+                                    <td>禁止的工具列表</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="example-block">
+                            <h4>示例</h4>
+                            <pre><code># 自动接受编辑（适合开发环境）
+claude --permission-mode acceptEdits
+
+# 只允许读取操作
+claude --allowed-tools Read,Glob,Grep
+
+# 禁止 Bash 工具
+claude --disallowed-tools Bash</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="doc-section">
+                        <h2>更多参数</h2>
+                        <ul class="param-list">
+                            <li><code>--version</code> / <code>-v</code> - 输出版本号</li>
+                            <li><code>--help</code> / <code>-h</code> - 显示帮助</li>
+                            <li><code>--debug [filter]</code> - 启用调试模式</li>
+                            <li><code>--max-budget-usd &lt;amount&gt;</code> - 最大 API 调用花费</li>
+                            <li><code>--output-format json</code> - JSON 输出格式</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 速查表页面 -->
+        <div id="page-cheatsheet" class="page">
+            <div class="doc-container">
+                <div class="doc-header">
+                    <h1><i class="fas fa-clone"></i> Claude Code 速查表</h1>
+                    <p>快速查找常用命令和快捷键</p>
+                </div>
+
+                <!-- 搜索组件 -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input
+                            type="text"
+                            id="cheatsheet-search-input"
+                            class="search-input"
+                            placeholder="搜索命令或中文描述..."
+                            autocomplete="off"
+                        >
+                        <button class="search-clear" id="cheatsheet-search-clear" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="search-mode-toggle">
+                        <button class="mode-btn active" data-mode="auto" title="自动检测">
+                            <i class="fas fa-magic"></i> 自动
+                        </button>
+                        <button class="mode-btn" data-mode="command" title="按命令搜索">
+                            <i class="fas fa-code"></i> 命令
+                        </button>
+                        <button class="mode-btn" data-mode="chinese" title="按中文搜索">
+                            <i class="fas fa-language"></i> 中文
+                        </button>
+                        <button class="mode-btn" data-mode="both" title="双向搜索">
+                            <i class="fas fa-exchange-alt"></i> 全部
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 搜索结果 -->
+                <div id="cheatsheet-search-results" class="search-results" style="display: none;">
+                    <!-- 动态生成搜索结果 -->
+                </div>
+
+                <!-- 默认内容 -->
+                <div id="cheatsheet-default-content">
+                <div class="cheatsheet-grid">
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-play"></i> CLI 启动</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>claude</code>
+                                <span>启动交互式会话</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude -p "prompt"</code>
+                                <span>打印模式（非交互）</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude -c</code>
+                                <span>继续上次对话</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude -r [id]</code>
+                                <span>恢复会话</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude --model sonnet</code>
+                                <span>使用 Sonnet 模型</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-file"></i> 文件引用</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>@file.py</code>
+                                <span>引用整个文件</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>@file.py:10-30</code>
+                                <span>引用行范围</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>@src/</code>
+                                <span>引用目录</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>#selection</code>
+                                <span>IDE 选中的文本</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>#function:main</code>
+                                <span>引用函数</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-slash-h"></i> 会话内命令</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>/help</code>
+                                <span>显示帮助</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>/clear</code>
+                                <span>清除上下文</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>/commit</code>
+                                <span>Git 提交</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>/tasks</code>
+                                <span>任务列表</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>/exit</code>
+                                <span>退出</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-plug"></i> MCP 管理</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>claude mcp list</code>
+                                <span>列出服务器</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude mcp add</code>
+                                <span>添加服务器</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude mcp remove</code>
+                                <span>删除服务器</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude mcp get</code>
+                                <span>查看详情</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-puzzle-piece"></i> 插件管理</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>claude plugin list</code>
+                                <span>列出插件</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude plugin install</code>
+                                <span>安装插件</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude plugin enable</code>
+                                <span>启用插件</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>claude plugin disable</code>
+                                <span>禁用插件</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-keyboard"></i> 快捷键</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>Ctrl+C</code>
+                                <span>中断生成</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>Ctrl+D</code>
+                                <span>退出</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>Ctrl+L</code>
+                                <span>清屏</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>↑/↓</code>
+                                <span>历史命令</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>Tab</code>
+                                <span>自动补全</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-cog"></i> 模型别名</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>sonnet</code>
+                                <span>Claude 3.5 Sonnet</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>opus</code>
+                                <span>Claude 3 Opus</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>haiku</code>
+                                <span>Claude 3.5 Haiku</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-shield-alt"></i> 权限模式</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>default</code>
+                                <span>询问（默认）</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>acceptEdits</code>
+                                <span>自动接受编辑</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>bypassPermissions</code>
+                                <span>跳过检查</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>dontAsk</code>
+                                <span>不询问</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3><i class="fas fa-folder"></i> 配置文件</h3>
+                        <div class="cheatsheet-content">
+                            <div class="cheatsheet-item">
+                                <code>~/.claude/settings.json</code>
+                                <span>用户设置</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>.claude/settings.json</code>
+                                <span>项目设置</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>.claude/settings.local.json</code>
+                                <span>本地设置</span>
+                            </div>
+                            <div class="cheatsheet-item">
+                                <code>.mcp.json</code>
+                                <span>MCP 配置</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 斜杠命令页面 -->
+        <div id="page-commands" class="page">
+            <div class="doc-container">
+                <div class="doc-header">
+                    <h1><i class="fas fa-code"></i> 内置斜杠命令</h1>
+                    <p>在 Claude Code 交互式会话中使用的命令</p>
+                </div>
+
+                <!-- 搜索组件 -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input
+                            type="text"
+                            id="commands-search-input"
+                            class="search-input"
+                            placeholder="搜索命令或中文描述..."
+                            autocomplete="off"
+                        >
+                        <button class="search-clear" id="commands-search-clear" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="search-mode-toggle">
+                        <button class="mode-btn active" data-mode="auto" title="自动检测">
+                            <i class="fas fa-magic"></i> 自动
+                        </button>
+                        <button class="mode-btn" data-mode="command" title="按命令搜索">
+                            <i class="fas fa-code"></i> 命令
+                        </button>
+                        <button class="mode-btn" data-mode="chinese" title="按中文搜索">
+                            <i class="fas fa-language"></i> 中文
+                        </button>
+                        <button class="mode-btn" data-mode="both" title="双向搜索">
+                            <i class="fas fa-exchange-alt"></i> 全部
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 搜索结果 -->
+                <div id="commands-search-results" class="search-results" style="display: none;">
+                    <!-- 动态生成搜索结果 -->
+                </div>
+
+                <!-- 默认内容 -->
+                <div id="commands-default-content">
+                <div class="commands-grid">
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/help</h3>
+                            <span class="command-badge">基础</span>
+                        </div>
+                        <p>显示帮助信息和可用命令</p>
+                        <div class="command-example">
+                            <pre><code>> /help
+
+# Claude Code 命令参考
+#
+# /help      - 显示此帮助
+# /clear     - 清除对话历史
+# /commit    - 创建 Git 提交
+# /tasks     - 查看任务列表
+# /exit      - 退出</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/clear</h3>
+                            <span class="command-badge">基础</span>
+                        </div>
+                        <p>清除当前对话的上下文和记忆</p>
+                        <div class="command-example">
+                            <pre><code>> /clear
+
+# 对话上下文已清除</code></pre>
+                        </div>
+                        <div class="command-use-cases">
+                            <h4>使用场景：</h4>
+                            <ul>
+                                <li>开始新话题</li>
+                                <li>重置对话状态</li>
+                                <li>清除错误上下文</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/commit</h3>
+                            <span class="command-badge">Git</span>
+                        </div>
+                        <p>创建 Git 提交，Claude 会自动分析改动并生成提交信息</p>
+                        <div class="command-example">
+                            <pre><code>> /commit
+
+# Claude 会：
+# 1. 运行 git status 查看改动
+# 2. 运行 git diff 查看具体变更
+# 3. 分析改动内容
+# 4. 生成符合规范的提交信息
+# 5. 执行 git add 和 git commit</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/tasks</h3>
+                            <span class="command-badge">管理</span>
+                        </div>
+                        <p>查看和管理当前会话的任务列表</p>
+                        <div class="command-example">
+                            <pre><code>> /tasks
+
+# 当前任务：
+#
+# [ ] 1. 分析现有代码结构
+# [ ] 2. 设计新的 API 接口
+# [ ] 3. 实现用户认证
+# [ ] 4. 编写单元测试</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/exit</h3>
+                            <span class="command-badge">基础</span>
+                        </div>
+                        <p>退出 Claude Code 会话</p>
+                        <div class="command-example">
+                            <pre><code>> /exit
+
+# 或者使用快捷键：
+# Ctrl+D (Unix/Linux/macOS)
+# Ctrl+Z 然后 Enter (Windows)</code></pre>
+                        </div>
+                        <div class="command-use-cases">
+                            <h4>会话保存：</h4>
+                            <ul>
+                                <li>默认自动保存会话</li>
+                                <li>可通过 --no-session-persistence 禁用</li>
+                                <li>使用 claude -c 继续上次会话</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/editor</h3>
+                            <span class="command-badge">高级</span>
+                        </div>
+                        <p>打开默认编辑器编辑长消息</p>
+                        <div class="command-example">
+                            <pre><code>> /editor
+
+# 打开 $EDITOR 或 vim 编辑器
+# 编辑完成后保存退出</code></pre>
+                        </div>
+                        <div class="command-use-cases">
+                            <h4>使用场景：</h4>
+                            <ul>
+                                <li>编写长提示词</li>
+                                <li>多行代码输入</li>
+                                <li>复杂问题描述</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/continue</h3>
+                            <span class="command-badge">高级</span>
+                        </div>
+                        <p>继续生成上次被截断的响应</p>
+                        <div class="command-example">
+                            <pre><code>> /continue
+
+# 继续上次的输出...</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/skip</h3>
+                            <span class="command-badge">控制</span>
+                        </div>
+                        <p>跳过当前正在执行的工具调用</p>
+                        <div class="command-use-cases">
+                            <h4>使用场景：</h4>
+                            <ul>
+                                <li>工具执行时间过长</li>
+                                <li>不需要当前操作结果</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/accept</h3>
+                            <span class="command-badge">权限</span>
+                        </div>
+                        <p>接受所有待处理的权限请求</p>
+                        <div class="command-example">
+                            <pre><code>> /accept
+
+# 批准所有挂起的操作</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-header">
+                            <h3>/reject</h3>
+                            <span class="command-badge">权限</span>
+                        </div>
+                        <p>拒绝所有待处理的权限请求</p>
+                        <div class="command-example">
+                            <pre><code>> /reject
+
+# 拒绝所有挂起的操作</code></pre>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="doc-section">
+                    <h2>快捷键参考</h2>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>快捷键</th>
+                                <th>功能</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>Ctrl+C</code></td><td>中断当前生成</td></tr>
+                            <tr><td><code>Ctrl+D</code></td><td>退出会话</td></tr>
+                            <tr><td><code>Ctrl+L</code></td><td>清屏</td></tr>
+                            <tr><td><code>↑ / ↓</code></td><td>浏览历史命令</td></tr>
+                            <tr><td><code>Tab</code></td><td>自动补全</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/navigation.js"></script>
+    <script src="js/search-data.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
