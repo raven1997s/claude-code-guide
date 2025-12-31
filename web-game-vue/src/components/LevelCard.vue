@@ -59,6 +59,8 @@ function handleClick() {
 </script>
 
 <style scoped>
+@import '@/styles/cyber-terminal.css';
+
 .level-card {
   cursor: pointer;
   transition: all 0.3s ease;
@@ -66,11 +68,11 @@ function handleClick() {
 
 .level-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 245, 255, 0.2);
 }
 
 .level-card.completed {
-  border-color: #34d399;
+  border-color: var(--cyber-green);
 }
 
 .level-card-content {
@@ -88,7 +90,7 @@ function handleClick() {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--cyber-pink) 100%);
 }
 
 .level-icon i {

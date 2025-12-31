@@ -154,8 +154,9 @@ const availableCommands = computed(() => {
 function handleTabComplete() {
   const currentInput = input.value.trim()
   if (!currentInput) {
-    // 如果输入为空，显示第一个必需命令或常用命令
-    const suggested = props.requiredCommands[0] || availableCommands.value[0]
+    // 如果输入为空，显示下一个未执行的必需命令
+    const nextRequired = props.requiredCommands.find(cmd => !executedCommands.value.has(cmd))
+    const suggested = nextRequired || props.requiredCommands[0] || availableCommands.value[0]
     input.value = suggested
     return
   }
@@ -326,9 +327,22 @@ nextTick(() => {
   }
 })
 
+// 清除终端
+function clearTerminal() {
+  output.value = [
+    { type: 'response', text: 'Claude Code 终端模拟器 v1.0' },
+    { type: 'response', text: '输入 "help" 查看可用命令' },
+    { type: 'response', text: '' }
+  ]
+  input.value = ''
+  inSession.value = false
+  executedCommands.value = new Set()
+}
+
 // 暴露方法
 defineExpose({
-  focus: () => inputRef.value?.focus()
+  focus: () => inputRef.value?.focus(),
+  clear: clearTerminal
 })
 </script>
 

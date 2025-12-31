@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="darkTheme">
+  <n-config-provider>
     <n-dialog-provider>
       <n-message-provider>
         <n-layout>
@@ -47,29 +47,27 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { NConfigProvider, darkTheme, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NSpace, NButton, NIcon, NDialogProvider, NMessageProvider } from 'naive-ui'
-import { Home as HomeIcon, Gamepad as GameIcon, Book as BookIcon, Clone as CloneIcon, Code as CodeIcon, Terminal as TerminalIcon } from '@vicons/fa'
+import { NConfigProvider, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NSpace, NButton, NIcon, NDialogProvider, NMessageProvider } from 'naive-ui'
+import { Home as HomeIcon, Gamepad as GameIcon, Clone as CloneIcon, Search as SearchIcon, Terminal as TerminalIcon } from '@vicons/fa'
 
 const router = useRouter()
 const route = useRoute()
 
-const activeKey = computed(() => route.path)
+const activeKey = () => route.path
 
 const menuItems = [
   { label: '首页', key: '/', icon: HomeIcon },
   { label: '互动游戏', key: '/game', icon: GameIcon },
-  { label: '命令参考', key: '/reference', icon: BookIcon },
-  { label: '速查表', key: '/cheatsheet', icon: CloneIcon },
-  { label: '斜杠命令', key: '/commands', icon: CodeIcon }
+  { label: '命令搜索', key: '/search', icon: SearchIcon },
+  { label: '速查表', key: '/cheatsheet', icon: CloneIcon }
 ]
 </script>
 
 <style scoped>
 /* 全局背景 */
 :deep(.n-layout) {
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(135deg, #f8f9fc 0%, #f0f2f5 100%);
   min-height: 100vh;
 }
 
@@ -77,10 +75,10 @@ const menuItems = [
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(15, 15, 26, 0.85);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-  box-shadow: 0 4px 30px rgba(102, 126, 234, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
 }
 
 .header-content {
@@ -100,9 +98,10 @@ const menuItems = [
   font-size: 22px;
   font-weight: 700;
   cursor: pointer;
-  color: #fff;
+  color: #1a1a2e;
   transition: all 0.3s ease;
   user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .logo:hover {
@@ -110,38 +109,40 @@ const menuItems = [
 }
 
 .logo :deep(.n-icon) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #6366f1;
 }
 
 /* 导航按钮样式优化 */
 :deep(.n-button) {
   transition: all 0.3s ease;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  font-weight: 500;
+  letter-spacing: 0.05em;
 }
 
 :deep(.n-button--primary-type) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  border: none !important;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  background: #6366f1 !important;
+  border: 1px solid #6366f1 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
 }
 
 :deep(.n-button--primary-type:hover) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
 }
 
 :deep(.n-button--ghost-type) {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #a1a1aa !important;
+  background: rgba(99, 102, 241, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  color: #6b7280 !important;
 }
 
 :deep(.n-button--ghost-type:hover) {
-  background: rgba(102, 126, 234, 0.15) !important;
-  border-color: rgba(102, 126, 234, 0.4) !important;
-  color: #fff !important;
+  background: rgba(99, 102, 241, 0.1) !important;
+  border-color: #6366f1 !important;
+  color: #6366f1 !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
 }
 
 /* 内容区域 */
@@ -152,8 +153,8 @@ const menuItems = [
 .footer {
   text-align: center;
   padding: 24px;
-  background: rgba(15, 15, 26, 0.8);
-  border-top: 1px solid rgba(102, 126, 234, 0.15);
+  background: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   margin-top: auto;
 }
 
@@ -163,8 +164,9 @@ const menuItems = [
   display: flex;
   justify-content: center;
   gap: 32px;
-  color: #71717a;
+  color: #6b7280;
   font-size: 14px;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
 }
 
 .footer-content span {
@@ -180,6 +182,7 @@ const menuItems = [
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6366f1;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
 }
 </style>

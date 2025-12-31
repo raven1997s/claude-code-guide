@@ -1,0 +1,354 @@
+/* ========================================
+   Cyber Terminal Design System
+   赛博朋克终端美学设计系统
+   ======================================== */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables - Cyber Terminal Palette */
+:root {
+  /* Primary Colors */
+  --cyber-cyan: #00F5FF;
+  --cyber-cyan-dim: rgba(0, 245, 255, 0.1);
+  --cyber-pink: #FF006E;
+  --cyber-pink-dim: rgba(255, 0, 110, 0.1);
+  --cyber-green: #00FF94;
+  --cyber-green-dim: rgba(0, 255, 148, 0.1);
+
+  /* Background Colors */
+  --cyber-dark: #0D1117;
+  --cyber-darker: #080c10;
+  --cyber-card-bg: rgba(13, 17, 23, 0.8);
+  --cyber-card-border: rgba(0, 245, 255, 0.2);
+
+  /* Text Colors */
+  --cyber-text-primary: #e6edf3;
+  --cyber-text-secondary: #8b949e;
+  --cyber-text-muted: #6e7681;
+
+  /* Fonts */
+  --font-display: 'Orbitron', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing */
+  --cyber-radius-sm: 8px;
+  --cyber-radius-md: 16px;
+  --cyber-radius-lg: 24px;
+
+  /* Effects */
+  --cyber-glow-cyan: 0 0 20px rgba(0, 245, 255, 0.5);
+  --cyber-glow-pink: 0 0 20px rgba(255, 0, 110, 0.5);
+  --cyber-glow-green: 0 0 20px rgba(0, 255, 148, 0.3);
+}
+
+/* ========================================
+   Typography
+   ======================================== */
+
+.cyber-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cyber-text-primary);
+  text-shadow: 0 0 10px var(--cyber-cyan-dim);
+}
+
+.cyber-mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ========================================
+   Background Effects
+   ======================================== */
+
+.cyber-grid-bg {
+  background:
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(135deg, var(--cyber-darker) 0%, var(--cyber-dark) 100%);
+  background-size: 50px 50px, 50px 50px, 100% 100%;
+  animation: gridPulse 8s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Scan Lines Effect */
+.cyber-scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-scanlines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: scanlineMove 10s linear infinite;
+}
+
+@keyframes scanlineMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(50px); }
+}
+
+/* ========================================
+   Card Styles
+   ======================================== */
+
+.cyber-card {
+  background: var(--cyber-card-bg);
+  border: 1px solid var(--cyber-card-border);
+  border-radius: var(--cyber-radius-md);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 245, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.cyber-card:hover {
+  border-color: var(--cyber-cyan);
+  box-shadow: var(--cyber-glow-cyan);
+  transform: translateY(-4px);
+}
+
+.cyber-card:hover::before {
+  left: 100%;
+}
+
+/* Holographic Border Effect */
+.cyber-card-holo {
+  position: relative;
+}
+
+.cyber-card-holo::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--cyber-cyan),
+    var(--cyber-pink),
+    var(--cyber-green),
+    var(--cyber-cyan)
+  );
+  background-size: 400% 400%;
+  border-radius: calc(var(--cyber-radius-md) + 2px);
+  z-index: -1;
+  animation: holographicShift 8s ease infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cyber-card-holo:hover::after {
+  opacity: 1;
+}
+
+@keyframes holographicShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ========================================
+   Button Styles
+   ======================================== */
+
+.cyber-btn {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 14px 28px;
+  border: 2px solid var(--cyber-cyan);
+  background: transparent;
+  color: var(--cyber-cyan);
+  border-radius: var(--cyber-radius-sm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.cyber-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--cyber-cyan), transparent);
+  transition: left 0.5s;
+}
+
+.cyber-btn:hover {
+  background: var(--cyber-cyan);
+  color: var(--cyber-dark);
+  box-shadow: var(--cyber-glow-cyan);
+}
+
+.cyber-btn:hover::before {
+  left: 100%;
+}
+
+.cyber-btn:active {
+  transform: scale(0.98);
+}
+
+/* Secondary Button (Pink) */
+.cyber-btn-secondary {
+  border-color: var(--cyber-pink);
+  color: var(--cyber-pink);
+}
+
+.cyber-btn-secondary::before {
+  background: linear-gradient(90deg, transparent, var(--cyber-pink), transparent);
+}
+
+.cyber-btn-secondary:hover {
+  background: var(--cyber-pink);
+  box-shadow: var(--cyber-glow-pink);
+}
+
+/* ========================================
+   Text Effects
+   ======================================== */
+
+/* Glowing Text */
+.cyber-glow {
+  text-shadow:
+    0 0 10px var(--cyber-cyan),
+    0 0 20px var(--cyber-cyan),
+    0 0 40px var(--cyber-cyan);
+}
+
+/* Typewriter Effect */
+.cyber-typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--cyber-cyan);
+  animation:
+    typing 3s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--cyber-cyan); }
+}
+
+/* Terminal Prompt */
+.cyber-prompt {
+  color: var(--cyber-cyan);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.cyber-prompt::before {
+  content: '> ';
+  color: var(--cyber-green);
+}
+
+/* ========================================
+   Animation Utilities
+   ======================================== */
+
+.cyber-fade-in {
+  animation: cyberFadeIn 0.6s ease-out;
+}
+
+@keyframes cyberFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cyber-stagger-1 { animation-delay: 0.1s; }
+.cyber-stagger-2 { animation-delay: 0.2s; }
+.cyber-stagger-3 { animation-delay: 0.3s; }
+.cyber-stagger-4 { animation-delay: 0.4s; }
+.cyber-stagger-5 { animation-delay: 0.5s; }
+
+/* Floating Animation */
+.cyber-float {
+  animation: cyberFloat 6s ease-in-out infinite;
+}
+
+@keyframes cyberFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Pulse Glow */
+.cyber-pulse {
+  animation: cyberPulse 2s ease-in-out infinite;
+}
+
+@keyframes cyberPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 245, 255, 0.6);
+  }
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+
+.cyber-text-cyan { color: var(--cyber-cyan); }
+.cyber-text-pink { color: var(--cyber-pink); }
+.cyber-text-green { color: var(--cyber-green); }
+
+.cyber-bg-dark { background-color: var(--cyber-dark); }
+.cyber-bg-card { background-color: var(--cyber-card-bg); }
+
+.cyber-border { border: 1px solid var(--cyber-card-border); }
+.cyber-border-cyan { border-color: var(--cyber-cyan); }

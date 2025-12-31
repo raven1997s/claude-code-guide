@@ -1,6 +1,39 @@
 <template>
   <div class="game-view">
-    <n-space vertical :size="24" v-if="!currentLevel">
+    <GenerativeBackground />
+
+    <!-- 浮动分享按钮 -->
+    <n-button
+      v-if="!currentLevel"
+      class="share-fab"
+      circle
+      size="large"
+      type="primary"
+      @click="showShareModal = true"
+    >
+      <template #icon>
+        <n-icon :component="ShareIcon" />
+      </template>
+    </n-button>
+
+    <!-- 分享卡片弹窗 -->
+    <n-modal
+      v-model:show="showShareModal"
+      preset="card"
+      title="生成分享卡片"
+      style="width: 600px; max-width: 90vw;"
+      :bordered="false"
+      size="huge"
+      role="dialog"
+      aria-modal="true"
+    >
+      <ShareCard
+        :completed-levels="completedLevels"
+        :total-levels="LEVELS.length"
+      />
+    </n-modal>
+
+    <n-space vertical :size="24" v-if="!currentLevel" class="game-content">
       <!-- 关卡选择界面 -->
       <div class="game-header">
         <n-button text @click="goHome" style="margin-bottom: 16px;">
@@ -123,6 +156,7 @@
       <!-- 终端 (CLI 关卡) -->
       <TerminalComponent
         v-if="currentLevel.category !== 'vscode'"
+        ref="terminalRef"
         :responses="TERMINAL_RESPONSES"
         :required-commands="currentLevel.requiredCommands"
         @command-executed="handleCommand"
@@ -132,6 +166,7 @@
       <!-- VS Code 插件 (VS Code 关卡) -->
       <VSCodeComponent
         v-else
+        ref="vscodeRef"
         :panel-only="true"
         :level-data="currentLevel"
         :conversations="VSCODE_CONVERSATIONS"
@@ -141,8 +176,40 @@
         @all-completed="handleAllCompleted"
       />
 
-      <!-- 完成按钮 -->
-      <n-card>
+      <!-- 完成卡片 - 显示在任务完成后 -->
+      <n-card v-if="showCompletionCard" class="completion-card" type="success">
+        <template #header>
+          <div class="completion-header">
+            <span class="completion-icon">🎉</span>
+            <span class="completion-title">关卡完成！</span>
+          </div>
+        </template>
+        <div class="completion-content">
+          <p class="completion-message">恭喜完成 "{{ currentLevel.name }}"</p>
+          <p v-if="earnedBadge" class="completion-badge">获得徽章：{{ earnedBadge.name }}</p>
+        </div>
+        <template #footer>
+          <n-space justify="center">
+            <n-button
+              v-if="nextLevelData"
+              type="primary"
+              size="large"
+              @click="goToNextLevel"
+            >
+              <template #icon>
+                <n-icon :component="CheckIcon" />
+              </template>
+              下一关
+            </n-button>
+            <n-button size="large" @click="exitLevel">
+              返回列表
+            </n-button>
+          </n-space>
+        </template>
+      </n-card>
+
+      <!-- 完成按钮 - 未完成时显示 -->
+      <n-card v-else>
         <n-space justify="center">
           <n-button
             type="primary"
@@ -170,22 +237,23 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useDialog } from 'naive-ui'
 import {
   NCard, NSpace, NH1, NH3, NText, NIcon, NButton, NTag, NTabs, NTabPane,
-  NStatistic, NP, NAlert, NCollapse, NCollapseItem
+  NStatistic, NP, NAlert, NCollapse, NCollapseItem, NModal
 } from 'naive-ui'
 import {
   Gamepad as GameIcon, ArrowLeft as ArrowLeftIcon, Check as CheckIcon,
-  Forward as SkipIcon, Lightbulb as LightbulbIcon
+  Forward as SkipIcon, Lightbulb as LightbulbIcon, ShareAlt as ShareIcon
 } from '@vicons/fa'
 import { LEVELS, LEVEL_CATEGORIES, TERMINAL_RESPONSES, PROGRESS_KEY } from '@/data/game-data'
 import { VSCODE_CONVERSATIONS, getFilesForLevel } from '@/data/vscode-data'
+import { getLevelBadge } from '@/data/badge-data'
 import LevelCard from '@/components/LevelCard.vue'
 import TerminalComponent from '@/components/TerminalComponent.vue'
 import VSCodeComponent from '@/components/VSCodeComponent.vue'
+import GenerativeBackground from '@/components/GenerativeBackground.vue'
+import ShareCard from '@/components/ShareCard.vue'
 
-const dialog = useDialog()
 const router = useRouter()
 
 const activeCategory = ref('all')
@@ -193,6 +261,16 @@ const currentLevel = ref(null)
 const completedLevels = ref([])
 const completedRequired = ref(0)
 const allRequiredCompleted = ref(false)
+const showShareModal = ref(false)
+
+// 组件 refs
+const terminalRef = ref(null)
+const vscodeRef = ref(null)
+
+// 完成状态
+const showCompletionCard = ref(false)
+const earnedBadge = ref(null)
+const nextLevelData = ref(null)
 
 const progressPercent = computed(() => {
   return (completedLevels.value.length / LEVELS.length) * 100
@@ -220,6 +298,17 @@ function startLevel(level) {
   currentLevel.value = level
   completedRequired.value = 0
   allRequiredCompleted.value = false
+  // 清除完成状态
+  showCompletionCard.value = false
+  earnedBadge.value = null
+  nextLevelData.value = null
+  // 清除终端输出
+  if (terminalRef.value) {
+    terminalRef.value.clear()
+  }
+  if (vscodeRef.value && vscodeRef.value.clear) {
+    vscodeRef.value.clear()
+  }
 }
 
 // 退出关卡
@@ -265,51 +354,33 @@ function getNextLevel() {
 
 // 完成关卡
 function completeLevel() {
-  if (!completedLevels.value.includes(currentLevel.value.id)) {
+  const isNewCompletion = !completedLevels.value.includes(currentLevel.value.id)
+  if (isNewCompletion) {
     completedLevels.value.push(currentLevel.value.id)
     saveProgress()
   }
 
+  // 获取关卡徽章和下一关
+  const badge = getLevelBadge(currentLevel.value.id)
   const nextLevel = getNextLevel()
 
-  if (nextLevel) {
-    // 有下一关，显示对话框并提供继续下一关选项
-    dialog.success({
-      title: '🎉 关卡完成！',
-      content: `恭喜完成 "${currentLevel.value.name}"`,
-      positiveText: '下一关',
-      negativeText: '返回列表',
-      onPositiveClick: () => {
-        startLevel(nextLevel)
-      },
-      onNegativeClick: () => {
-        exitLevel()
-      }
-    })
-  } else {
-    // 已完成所有关卡
-    dialog.success({
-      title: '🏆 恭喜通关！',
-      content: '你已经完成了所有关卡！',
-      positiveText: '返回列表',
-      onPositiveClick: () => {
-        exitLevel()
-      }
-    })
+  // 设置完成状态
+  showCompletionCard.value = true
+  earnedBadge.value = isNewCompletion ? badge : null
+  nextLevelData.value = nextLevel
+}
+
+// 进入下一关
+function goToNextLevel() {
+  if (nextLevelData.value) {
+    startLevel(nextLevelData.value)
   }
 }
 
 // 跳过关卡
 function skipLevel() {
-  dialog.warning({
-    title: '跳过关卡',
-    content: '跳过不会标记关卡为完成，确定吗？',
-    positiveText: '确定',
-    negativeText: '取消',
-    onPositiveClick: () => {
-      exitLevel()
-    }
-  })
+  // 直接退出，跳过不标记为完成
+  exitLevel()
 }
 
 // 保存进度
@@ -327,9 +398,17 @@ function goHome() {
 
 <style scoped>
 .game-view {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px 24px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+}
+
+.game-content {
+  position: relative;
+  z-index: 2;
 }
 
 .game-header {
@@ -341,5 +420,94 @@ function goHome() {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
+}
+
+/* 浮动分享按钮 */
+.share-fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.share-fab:hover {
+  animation: none;
+  transform: scale(1.1);
+}
+
+/* Modal 样式覆盖 */
+:deep(.n-card) {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* 完成卡片样式 */
+.completion-card {
+  animation: slideIn 0.3s ease-out;
+}
+
+.completion-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.completion-icon {
+  font-size: 28px;
+  animation: bounce 0.5s ease-out;
+}
+
+.completion-title {
+  color: #10b981;
+}
+
+.completion-content {
+  text-align: center;
+  padding: 12px 0;
+}
+
+.completion-message {
+  font-size: 16px;
+  color: #1a1a2e;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.completion-badge {
+  font-size: 14px;
+  color: #ec4899;
+  margin: 0;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  padding: 8px 16px;
+  background: rgba(236, 72, 153, 0.1);
+  border-radius: 8px;
+  display: inline-block;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 </style>

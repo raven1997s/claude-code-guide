@@ -17,19 +17,14 @@ const routes = [
     component: () => import('@/views/GameView.vue')
   },
   {
-    path: '/reference',
-    name: 'Reference',
-    component: () => import('@/views/ReferenceView.vue')
+    path: '/search',
+    name: 'Search',
+    component: () => import('@/views/SearchView.vue')
   },
   {
     path: '/cheatsheet',
     name: 'Cheatsheet',
     component: () => import('@/views/CheatsheetView.vue')
-  },
-  {
-    path: '/commands',
-    name: 'Commands',
-    component: () => import('@/views/CommandsView.vue')
   }
 ]
 
