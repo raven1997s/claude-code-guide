@@ -123,6 +123,9 @@ npm run dev
 
 ## 提交历史
 
+- `11bd1cc` - refactor: reorganize project directory structure
+- `ea59a2a` - feat(ui): convert entire app to light theme
+- `90acd54` - feat(skills,game): add comprehensive skills system and VSCode tutorial
 - `dc82d64` - docs: 优化项目文档
 - `902ec79` - Initial commit: Claude Code CLI learning project
 

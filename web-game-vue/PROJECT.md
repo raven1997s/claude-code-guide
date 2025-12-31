@@ -234,4 +234,4 @@ npm run preview
 ### v1.0 - 原版（已废弃）
 - Vanilla JS 实现
 - 存在搜索 Bug
-- 见 `../web-game/DEPRECATED.md`
+- 见 `../archive/web-game/DEPRECATED.md`

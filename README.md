@@ -183,5 +183,6 @@ Claude Code 在执行危险操作前会请求权限：
 
 ## 更新日志
 
+- **2025-12-31**: 目录重组，创建 `scripts/`, `docs/`, `archive/`, `tests/` 目录，清理 `.claude/skills-official/`
 - **2025-12-30**: Vue 3 版本上线，修复所有搜索功能问题
 - **初始版本**: 原版 Vanilla JS 实现（已废弃）
