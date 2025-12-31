@@ -77,9 +77,8 @@ claude -r [session-id]
 | [文件引用语法](docs/file-references.md) | @文件 和 #选择 语法 |
 | [MCP 服务器](docs/mcp.md) | MCP 配置和管理 |
 | [插件系统](docs/plugins.md) | 插件安装和管理 |
-| [配置文件](docs/configuration.md) | settings.json 配置 |
-| [Hooks](docs/hooks.md) | 事件钩子详解 |
-| [Skills](docs/skills.md) | 自定义 Skill 创建 |
+| [速查表](docs/cheatsheet.md) | 常用命令快速参考 |
+| [工作流示例](docs/examples.md) | 实用工作流示例 |
 
 ---
 
@@ -102,23 +101,29 @@ claude -r [session-id]
 ```
 claude-code-guide/
 ├── README.md              # 本文件
+├── STATUS.md              # 项目状态追踪
 ├── web-game-vue/          # Vue 3 互动学习游戏（推荐）
 │   ├── PROJECT.md         # 项目详细文档
 │   ├── src/
-│   │   ├── views/        # 5 个页面组件
+│   │   ├── views/        # 页面组件
 │   │   ├── components/   # SearchBox, TerminalComponent 等
 │   │   └── data/         # 游戏数据和搜索数据
 │   └── package.json
-├── web-game/              # 原版游戏（已废弃）
-│   └── DEPRECATED.md
-├── docs/                  # 详细文档
-│   ├── cli-arguments.md
-│   ├── commands/
-│   ├── features/
-│   └── guides/
-├── examples/              # 实用示例
-├── cheatsheet/            # 速查表
-└── .claude/               # Claude Code 配置示例
+├── scripts/               # 工具脚本
+│   ├── shell/            # Shell 脚本
+│   └── python/           # Python 工具
+├── docs/                  # 统一文档目录
+│   ├── cli-arguments.md  # CLI 参数参考
+│   ├── commands/         # 内置命令文档
+│   ├── cheatsheet.md     # 速查表
+│   └── examples.md       # 工作流示例
+├── tests/                 # 测试文件
+├── archive/               # 归档内容
+│   └── web-game/         # 原版游戏（已废弃）
+└── .claude/               # Claude Code 配置
+    ├── agents/           # Agent 定义
+    ├── hooks/            # 事件钩子
+    └── skills/           # 自定义 Skills
 ```
 
 ---

@@ -2,6 +2,17 @@
 
 > 最后更新: 2025-12-31
 
+## 目录重组记录 (2025-12-31)
+
+已完成项目目录结构重组：
+- ✅ 创建 `scripts/` 目录，集中存放 shell 和 python 脚本
+- ✅ 创建 `archive/` 目录，归档已废弃的 `web-game/`
+- ✅ 合并 `cheatsheet/` 和 `examples/` 到 `docs/` 统一管理
+- ✅ 清理 `.claude/skills-official/` 混乱的备份目录
+- ✅ 整理 `frontend-design` skill 的笔记文件
+
+---
+
 ---
 
 ## 当前状态

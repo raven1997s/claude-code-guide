@@ -25,7 +25,20 @@
     }
   },
 
-  "hooks": {},
+  "hooks": {
+    "PreCommit": {
+      "command": "bash",
+      "args": [".claude/hooks/pre-commit.sh"]
+    },
+    "PostWrite": {
+      "command": "bash",
+      "args": [".claude/hooks/post-write.sh", "{file}"]
+    },
+    "PreBash": {
+      "command": "bash",
+      "args": [".claude/hooks/pre-bash.sh", "{command}"]
+    }
+  },
 
   "plugins": {
     "enabled": [],
@@ -33,7 +46,7 @@
     "config": {}
   },
 
-  "systemPrompt": "你是一个帮助用户学习 Claude Code CLI 的助手。这个项目包含多个学习资源：shell 脚本游戏、网页游戏、文档和示例。",
+  "systemPrompt": "你是一个帮助用户学习 Claude Code CLI 的助手。这个项目包含多个学习资源：shell 脚本游戏、网页游戏、文档和示例。\n\n## 已安装扩展\n\n### Skills (可用 /skill 调用):\n- test-writer: 自动生成测试\n- code-explainer: 解释代码如何工作\n- code-reviewer: 审查代码质量\n- vue-expert: Vue 3 专业知识\n- frontend-design: 前端设计最佳实践\n\n### Agents (可切换):\n- debugger: 调试复杂问题\n- test-runner: 运行测试并分析结果\n- vue-expert: Vue 开发专家\n- reviewer: 代码审查专家\n\n### Hooks (自动触发):\n- pre-commit: Git 提交前运行 lint+测试\n- post-write: 文件写入后自动格式化\n- pre-bash: 危险命令执行前确认\n\n## 自动调度规则\n\n根据用户需求自动选择扩展：\n- 提到\"测试\"、\"test\" → 调用 test-writer skill 或 test-runner agent\n- 提到\"解释\"、\"做什么\" → 调用 code-explainer skill\n- 提到\"bug\"、\"错误\"、\"调试\" → 切换到 debugger agent\n- 提到\"Vue\"、\"组件\" → 调用 vue-expert skill 或 agent\n- 提到\"审查\"、\"review\" → 调用 code-reviewer skill 或 reviewer agent\n\n请主动识别用户意图并调用合适的扩展，无需等待明确指令。",
 
   "inlineAssistance": {
     "enable": true
