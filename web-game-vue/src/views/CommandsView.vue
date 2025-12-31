@@ -55,18 +55,111 @@ const shortcutColumns = [
 
 <style scoped>
 .commands-view {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 48px 24px;
 }
 
 .doc-header {
   text-align: center;
+  margin-bottom: 40px;
+}
+
+.doc-header :deep(.n-h1) {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.doc-header :deep(.n-icon) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .commands-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+:deep(.commands-grid .n-card) {
+  background: rgba(30, 30, 46, 0.5);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+:deep(.commands-grid .n-card:hover) {
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+  transform: translateY(-4px);
+}
+
+:deep(.commands-grid .n-card__header) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 20px;
+}
+
+:deep(.commands-grid .n-card__content) {
+  flex: 1;
+  padding: 16px 20px;
+}
+
+:deep(.n-text strong) {
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+:deep(.n-text[depth='3']) {
+  color: #a1a1aa !important;
+  line-height: 1.6;
+}
+
+:deep(.n-card[title='快捷键参考']) {
+  background: rgba(30, 30, 46, 0.5);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+}
+
+:deep(.n-card[title='快捷键参考'] .n-card__header) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+:deep(.n-card[title='快捷键参考'] .n-card__header span) {
+  color: #fff !important;
+  font-weight: 700;
+}
+
+/* 数据表格样式 */
+:deep(.n-data-table) {
+  --n-td-text-color: #a1a1aa;
+  --n-th-text-color: #fff;
+  --n-border-color: rgba(255, 255, 255, 0.08);
+  --n-tr-hover-color: rgba(102, 126, 234, 0.05);
+}
+
+:deep(.n-data-table-th) {
+  color: #fff !important;
+  font-weight: 700;
+  background: rgba(102, 126, 234, 0.08) !important;
+}
+
+:deep(.n-data-table-td) {
+  color: #d4d4d8 !important;
+}
+
+:deep(.n-data-table-tr:hover) {
+  background: rgba(102, 126, 234, 0.08) !important;
 }
 </style>

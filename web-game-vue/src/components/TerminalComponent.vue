@@ -12,7 +12,10 @@
 
       <div ref="outputRef" class="terminal-output">
         <div v-for="(line, index) in output" :key="index" class="terminal-line">
-          <span v-if="line.type === 'command'" class="terminal-prompt">{{ line.prompt }}</span>
+          <template v-if="line.type === 'command'">
+            <span class="terminal-prompt">{{ line.prompt }}</span>
+            <span class="terminal-command">{{ line.text }}</span>
+          </template>
           <span v-else class="terminal-response">{{ line.text }}</span>
         </div>
       </div>
@@ -24,7 +27,7 @@
           v-model="input"
           type="text"
           @keydown.enter="handleSubmit"
-          @keydown.tab.prevent=""
+          @keydown.tab.prevent="handleTabComplete"
           placeholder="输入命令..."
           autocomplete="off"
           spellcheck="false"
@@ -32,7 +35,7 @@
       </div>
 
       <n-text depth="3" style="font-size: 12px; margin-top: 8px;">
-        提示：按 Enter 执行命令
+        提示：按 Enter 执行命令，按 Tab 自动补全
       </n-text>
     </div>
   </n-card>
@@ -40,7 +43,7 @@
 
 <script setup>
 import { ref, computed, nextTick, watch } from 'vue'
-import { NCard, NSpace, NText, NInput } from 'naive-ui'
+import { NCard, NSpace, NText } from 'naive-ui'
 
 const props = defineProps({
   responses: {
@@ -70,6 +73,141 @@ const inSession = ref(false)
 const executedCommands = ref(new Set())
 
 const prompt = computed(() => inSession.value ? '>' : '$')
+
+// 可用命令列表（用于自动补全）
+const availableCommands = computed(() => {
+  // 基础命令
+  const commands = [
+    'claude',
+    'help',
+    '--help',
+    '-h',
+    '--version',
+    '-v',
+    '--print',
+    '-p',
+    '--continue',
+    '-c',
+    '--resume',
+    '-r',
+    '--model',
+    '--agent',
+    'ls',
+    'cd',
+    'pwd',
+    'cat',
+    'echo',
+    'git',
+    'git status',
+    'git diff',
+    'git log',
+    'git add',
+    'git commit',
+    'git push',
+    'git pull',
+    'npm',
+    'npm install',
+    'npm run',
+    'npm test',
+    'npm build',
+    'node',
+    'python',
+    'python3'
+  ]
+
+  // 会话内命令
+  if (inSession.value) {
+    commands.push(
+      '/help',
+      '/clear',
+      '/commit',
+      '/tasks',
+      '/exit',
+      '/editor',
+      '/continue',
+      '/skip',
+      '/accept',
+      '/reject',
+      '/model',
+      '/diff',
+      '/read',
+      '/write',
+      'exit',
+      'help',
+      'clear',
+      'commit',
+      'tasks'
+    )
+  }
+
+  // 添加当前关卡必需的命令
+  props.requiredCommands.forEach(cmd => {
+    if (!commands.includes(cmd)) {
+      commands.push(cmd)
+    }
+  })
+
+  return commands
+})
+
+// Tab 自动补全
+function handleTabComplete() {
+  const currentInput = input.value.trim()
+  if (!currentInput) {
+    // 如果输入为空，显示第一个必需命令或常用命令
+    const suggested = props.requiredCommands[0] || availableCommands.value[0]
+    input.value = suggested
+    return
+  }
+
+  // 查找匹配的命令
+  const matches = availableCommands.value.filter(cmd =>
+    cmd.startsWith(currentInput)
+  )
+
+  if (matches.length === 0) {
+    // 没有匹配，尝试模糊匹配
+    const fuzzyMatches = availableCommands.value.filter(cmd =>
+      cmd.includes(currentInput) || currentInput.includes(cmd)
+    )
+    if (fuzzyMatches.length > 0) {
+      input.value = fuzzyMatches[0]
+    }
+  } else if (matches.length === 1) {
+    // 唯一匹配，直接补全
+    input.value = matches[0]
+  } else {
+    // 多个匹配，补全到公共前缀
+    const commonPrefix = getCommonPrefix(matches)
+    if (commonPrefix.length > currentInput.length) {
+      input.value = commonPrefix
+    } else {
+      // 显示所有匹配项
+      output.value.push({ type: 'response', text: `可用命令: ${matches.join(', ')}` })
+      output.value.push({ type: 'response', text: '' })
+      nextTick(() => {
+        if (outputRef.value) {
+          outputRef.value.scrollTop = outputRef.value.scrollHeight
+        }
+      })
+    }
+  }
+}
+
+// 获取公共前缀
+function getCommonPrefix(strings) {
+  if (strings.length === 0) return ''
+  if (strings.length === 1) return strings[0]
+
+  let prefix = strings[0]
+  for (let i = 1; i < strings.length; i++) {
+    while (strings[i].indexOf(prefix) !== 0) {
+      prefix = prefix.slice(0, -1)
+      if (prefix === '') return ''
+    }
+  }
+  return prefix
+}
 
 // 监听输入变化，自动聚焦
 watch(input, () => {
@@ -165,8 +303,7 @@ function processCommand(command) {
 }
 
 // 检查必需命令
-function checkRequiredCommands(command, force = false) {
-  const key = inSession.value && !force ? `session:${command}` : command
+function checkRequiredCommands(command, _force = false) {
   const wasRequired = props.requiredCommands.includes(command) && !executedCommands.value.has(command)
 
   if (wasRequired) {
@@ -239,6 +376,11 @@ defineExpose({
 .terminal-prompt {
   color: #22d3ee;
   margin-right: 8px;
+}
+
+.terminal-command {
+  color: #a5b4fc;
+  font-weight: 500;
 }
 
 .terminal-response {

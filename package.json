@@ -1,0 +1,15 @@
+{
+  "name": "claude-code-guide",
+  "version": "1.0.0",
+  "description": "Claude Code CLI 学习中心",
+  "scripts": {
+    "dev": "cd web-game-vue && npm run dev",
+    "build": "cd web-game-vue && npm run build",
+    "preview": "cd web-game-vue && npm run preview",
+    "lint": "cd web-game-vue && npm run lint",
+    "format": "cd web-game-vue && npm run format"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2"
+  }
+}

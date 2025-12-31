@@ -1,6 +1,6 @@
 # 项目状态追踪
 
-> 最后更新: 2025-12-30
+> 最后更新: 2025-12-31
 
 ---
 
@@ -21,9 +21,15 @@
 3. **文档完善**
    - `README.md` - 优化后的根目录文档
    - `web-game-vue/PROJECT.md` - 详细的项目技术文档
+   - `web-game-vue/CLAUDE.md` - AI 助手专属指令
    - `web-game/DEPRECATED.md` - 旧版废弃说明
 
-4. **Git 仓库初始化**
+4. **代码质量工具配置**
+   - ESLint 9 + Prettier + EditorConfig
+   - 新增 `npm run lint` 和 `npm run format` 脚本
+   - 修复所有代码质量问题（0 errors, 0 warnings）
+
+5. **Git 仓库初始化**
    - 仓库地址: https://github.com/raven1997s/claude-code-guide
    - 已推送 3 个提交到 main 分支
    - 使用 gh CLI 进行认证
@@ -82,6 +88,9 @@
 | `web-game-vue/src/views/GameView.vue` | 游戏主页面 |
 | `web-game-vue/src/data/game-data.js` | 25 关卡数据 |
 | `web-game-vue/src/data/search-data.js` | 搜索数据库 |
+| `web-game-vue/eslint.config.js` | ESLint 配置 |
+| `web-game-vue/.prettierrc` | Prettier 配置 |
+| `web-game-vue/.editorconfig` | 编辑器配置 |
 
 ### 启动项目
 

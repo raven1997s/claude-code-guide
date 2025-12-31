@@ -93,13 +93,34 @@ import { SEARCH_DATABASE } from '@/data/search-data'
 
 <style scoped>
 .reference-view {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 48px 24px;
 }
 
 .doc-header {
   text-align: center;
+  margin-bottom: 40px;
+}
+
+.doc-header :deep(.n-h1) {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.doc-header :deep(.n-icon) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .doc-content {
@@ -108,13 +129,74 @@ import { SEARCH_DATABASE } from '@/data/search-data'
   gap: 24px;
 }
 
+:deep(.n-card) {
+  background: rgba(30, 30, 46, 0.5);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  transition: all 0.3s ease;
+}
+
+:deep(.n-card:hover) {
+  border-color: rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+}
+
+:deep(.n-card__header) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+:deep(.n-card__header span) {
+  color: #fff !important;
+  font-weight: 700;
+}
+
 .code-block {
-  background: #1e1e1e;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
   color: #e4e4e7;
-  padding: 12px 16px;
-  border-radius: 6px;
+  padding: 16px 20px;
+  border-radius: 10px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: 14px;
+  font-size: 15px;
   display: block;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+/* 描述列表样式 */
+:deep(.n-descriptions) {
+  --n-td-text-color: #a1a1aa;
+  --n-th-text-color: #fff;
+  --n-border-color: rgba(255, 255, 255, 0.08);
+}
+
+:deep(.n-descriptions-table-content__label) {
+  background: rgba(102, 126, 234, 0.08);
+  color: #fff !important;
+  font-weight: 600;
+}
+
+:deep(.n-descriptions-table-content__content) {
+  color: #d4d4d8 !important;
+}
+
+/* 列表样式 */
+:deep(.n-list) {
+  --n-text-color: #a1a1aa;
+}
+
+:deep(.n-list-item) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+:deep(.n-thing) {
+  --n-title-text-color: #fff;
+  --n-description-text-color: #a1a1aa;
+}
+
+:deep(.n-thing-main__title) {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+:deep(.n-thing-main__description) {
+  color: #a1a1aa !important;
 }
 </style>

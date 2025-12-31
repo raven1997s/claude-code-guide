@@ -512,6 +512,145 @@ CLI 模式：
 9. \`/exit\`
 
 🎉 完成所有关卡，成为 Claude Code 大师！`
+  },
+
+  // ============ VS Code 插件关卡 (26-37) ============
+
+  {
+    id: 26,
+    category: 'vscode',
+    name: '首次启动',
+    icon: 'fa-play',
+    objective: '了解 VS Code 插件界面并打开 Claude Code 面板',
+    requiredActions: [{ type: 'click-panel', target: 'claude', description: '点击 Claude Code 图标' }],
+    task: `欢迎来到 VS Code 插件模拟！点击左侧活动栏的 Claude Code 图标（💬）打开面板。`
+  },
+  {
+    id: 27,
+    category: 'vscode',
+    name: '基础对话',
+    icon: 'fa-comment',
+    objective: '发送第一条消息给 Claude',
+    requiredActions: [
+      { type: 'click-panel', target: 'claude', description: '打开 Claude Code 面板' },
+      { type: 'send-message', target: '你好', description: '发送"你好"' }
+    ],
+    task: `在 Claude Code 面板中输入"你好"并发送。`
+  },
+  {
+    id: 28,
+    category: 'vscode',
+    name: '查看上下文',
+    icon: 'fa-file-code',
+    objective: '将文件引用到对话中',
+    requiredActions: [
+      { type: 'select-file', target: 'src/App.vue', description: '选择 App.vue' },
+      { type: 'send-message', description: '发送消息' }
+    ],
+    task: `选择文件后再发送消息，Claude 会引用文件上下文。`
+  },
+  {
+    id: 29,
+    category: 'vscode',
+    name: '代码解释',
+    icon: 'fa-magnifying-glass',
+    objective: '请求 Claude 解释代码',
+    requiredActions: [
+      { type: 'select-file', target: 'src/data/game-data.js', description: '选择 game-data.js' },
+      { type: 'send-message', description: '请求解释' }
+    ],
+    task: `选择 game-data.js，输入"解释 LEVELS 数据结构"。`
+  },
+  {
+    id: 30,
+    category: 'vscode',
+    name: '函数分析',
+    icon: 'fa-code-branch',
+    objective: '分析函数的工作原理',
+    requiredActions: [
+      { type: 'select-file', target: 'src/components/TerminalComponent.vue', description: '选择 TerminalComponent' },
+      { type: 'send-message', description: '请求分析函数' }
+    ],
+    task: `选择 TerminalComponent.vue，输入"分析 processCommand 函数"。`
+  },
+  {
+    id: 31,
+    category: 'vscode',
+    name: '问题诊断',
+    icon: 'fa-bug',
+    objective: '让 Claude 发现 bug',
+    requiredActions: [
+      { type: 'select-file', target: 'src/buggy-file.js', description: '选择 buggy-file.js' },
+      { type: 'send-message', description: '请求找 bug' }
+    ],
+    task: `选择 buggy-file.js，输入"找出这段代码的问题"。`
+  },
+  {
+    id: 32,
+    category: 'vscode',
+    name: '重构建议',
+    icon: 'fa-wand-magic-sparkles',
+    objective: '获取代码优化建议',
+    requiredActions: [
+      { type: 'select-file', target: 'src/utils/calculator.js', description: '选择 calculator.js' },
+      { type: 'send-message', description: '请求重构' }
+    ],
+    task: `选择 calculator.js，输入"如何优化这段代码"。`
+  },
+  {
+    id: 33,
+    category: 'vscode',
+    name: '应用修改',
+    icon: 'fa-check',
+    objective: '应用 Claude 建议的修改',
+    requiredActions: [
+      { type: 'send-message', description: '先获取建议' },
+      { type: 'apply-diff', description: '点击应用修改' }
+    ],
+    task: `获取重构建议后，点击"应用修改"按钮。`
+  },
+  {
+    id: 34,
+    category: 'vscode',
+    name: '多文件编辑',
+    icon: 'fa-files',
+    objective: '体验多文件编辑能力',
+    requiredActions: [{ type: 'send-message', description: '请求演示' }],
+    task: `输入"演示多文件编辑"。`
+  },
+  {
+    id: 35,
+    category: 'vscode',
+    name: '查看改动',
+    icon: 'fa-code-compare',
+    objective: '查看 Git diff',
+    requiredActions: [
+      { type: 'apply-diff', description: '先应用修改' },
+      { type: 'view-changes', description: '切换到 Git 面板' }
+    ],
+    task: `应用修改后，点击源代码管理图标查看改动。`
+  },
+  {
+    id: 36,
+    category: 'vscode',
+    name: '生成提交信息',
+    icon: 'fa-code-commit',
+    objective: '自动生成 commit message',
+    requiredActions: [{ type: 'send-message', description: '请求生成提交信息' }],
+    task: `输入"为这些改动生成提交信息"。`
+  },
+  {
+    id: 37,
+    category: 'vscode',
+    name: '完整工作流',
+    icon: 'fa-star',
+    objective: '综合运用所有功能',
+    requiredActions: [
+      { type: 'select-file', description: '选择文件' },
+      { type: 'click-panel', description: '打开面板' },
+      { type: 'send-message', description: '发送工作流请求' }
+    ],
+    task: `完成完整的 AI 辅助编程工作流！输入"演示完整工作流"。`
   }
 ]
 
@@ -521,7 +660,8 @@ export const LEVEL_CATEGORIES = {
   session: { label: '会话命令', icon: 'fa-comments', color: '#a78bfa' },
   git: { label: 'Git 操作', icon: 'fa-code-branch', color: '#34d399' },
   mixed: { label: '综合挑战', icon: 'fa-trophy', color: '#fbbf24' },
-  master: { label: '大师挑战', icon: 'fa-crown', color: '#f87171' }
+  master: { label: '大师挑战', icon: 'fa-crown', color: '#f87171' },
+  vscode: { label: 'VS Code 插件', icon: 'fa-code', color: '#60a5fa' }
 }
 
 // 进度存储
