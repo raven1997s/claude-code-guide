@@ -83,8 +83,11 @@
 | REQ-2.1 | 关卡提示系统 | 1.5 MD | 🟢 已定义 | [REQ-2.1-hint-system.md](./REQ-2.1-hint-system.md) |
 | REQ-2.2 | 成就系统 | 1 MD | 🟢 已定义 | [REQ-2.2-achievement-system.md](./REQ-2.2-achievement-system.md) |
 | REQ-2.3 | 学习进度可视化 | 1 MD | 🔴 待定义 | - |
+| **REQ-2.4** | **VS Code 教程重构** | **15.5 MD** | **🟢 已定义** | **[REQ-2.4-tutorial-redesign.md](./REQ-2.4-tutorial-redesign.md)** |
 
-**预估工时**: TBD
+**预估工时**: 20 MD (约 4-5 周)
+
+> **🆕 新增**: VS Code 教程重构 (REQ-2.4) - 渐进式引导 + 深度学习 + 自适应主题
 
 ---
 

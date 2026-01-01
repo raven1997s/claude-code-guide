@@ -1,175 +1,89 @@
 <template>
-  <div class="page-background">
-    <!-- 网格背景 -->
-    <div class="cyber-grid-bg"></div>
-
-    <!-- 粒子效果 -->
-    <div class="particles">
-      <div
-        v-for="i in 15"
-        :key="i"
-        class="particle"
-        :style="getParticleStyle(i)"
-      ></div>
-    </div>
-
-    <!-- 扫描线 -->
-    <div class="scan-lines"></div>
-
-    <!-- 光晕装饰 -->
-    <div class="glow-orbs">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-    </div>
+  <div class="gradient-mesh-background">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="gradient-orb orb-4"></div>
+    <div class="noise-overlay"></div>
   </div>
 </template>
 
-<script setup>
-const getParticleStyle = (_i) => {
-  const size = Math.random() * 3 + 1
-  const left = Math.random() * 100
-  const delay = Math.random() * 5
-  const duration = Math.random() * 15 + 10
-
-  return {
-    width: `${size}px`,
-    height: `${size}px`,
-    left: `${left}%`,
-    animationDelay: `${delay}s`,
-    animationDuration: `${duration}s`
-  }
-}
-</script>
-
 <style scoped>
-.page-background {
+.gradient-mesh-background {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 0;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-bg-base);
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
-}
-
-.cyber-grid-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    linear-gradient(rgba(0, 245, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 245, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(135deg, var(--cyber-darker) 0%, var(--cyber-dark) 100%);
-  background-size: 60px 60px, 60px 60px, 100% 100%;
-  animation: gridPulse 10s ease-in-out infinite;
-}
-
-@keyframes gridPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-.particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.particle {
-  position: absolute;
-  background: radial-gradient(circle, rgba(0, 245, 255, 0.6), transparent);
-  border-radius: 50%;
-  animation: particleFloat linear infinite;
-}
-
-@keyframes particleFloat {
-  0% {
-    transform: translateY(100vh) scale(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateY(-100px) scale(1);
-    opacity: 0;
-  }
-}
-
-.scan-lines {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.05) 0px,
-    rgba(0, 0, 0, 0.05) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-  animation: scanlineMove 12s linear infinite;
   pointer-events: none;
 }
 
-@keyframes scanlineMove {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(60px); }
-}
-
-.glow-orbs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-}
-
-.orb {
+.gradient-orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.15;
+  opacity: 0.6;
   animation: orbFloat 20s ease-in-out infinite;
 }
 
 .orb-1 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, var(--cyber-cyan), transparent);
+  width: 600px;
+  height: 600px;
+  background: rgba(99, 102, 241, 0.3);
   top: -200px;
-  right: -200px;
+  left: -200px;
   animation-delay: 0s;
 }
 
 .orb-2 {
+  width: 500px;
+  height: 500px;
+  background: rgba(139, 92, 246, 0.25);
+  top: 50%;
+  right: -150px;
+  animation-delay: -5s;
+}
+
+.orb-3 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, var(--cyber-pink), transparent);
-  bottom: -150px;
-  left: -150px;
+  background: rgba(16, 185, 129, 0.2);
+  bottom: -100px;
+  left: 30%;
   animation-delay: -10s;
 }
 
+.orb-4 {
+  width: 300px;
+  height: 300px;
+  background: rgba(245, 158, 11, 0.15);
+  top: 30%;
+  left: 20%;
+  animation-delay: -15s;
+}
+
 @keyframes orbFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(50px, 30px) scale(1.1);
-  }
-  66% {
-    transform: translate(-30px, 50px) scale(0.9);
-  }
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -30px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(20px, 10px) scale(1.02); }
+}
+
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .orb-1 { background: rgba(99, 102, 241, 0.15); }
+  .orb-2 { background: rgba(139, 92, 246, 0.12); }
+  .orb-3 { background: rgba(16, 185, 129, 0.1); }
+  .orb-4 { background: rgba(245, 158, 11, 0.08); }
 }
 </style>

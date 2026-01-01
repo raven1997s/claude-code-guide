@@ -154,6 +154,27 @@ web-game-vue/
 
 ---
 
+### ✅ Phase 3: 页面质感全面提升 (已完成 - 2026-01-01)
+
+| 任务ID | 功能描述 | 文件 | 预估 | 状态 |
+|--------|----------|------|------|------|
+| **DEV-P3.1.1** | 全局样式升级 | `design-tokens.css` | 0.5MD | ✅ 已完成 |
+| **DEV-P3.1.2** | 卡片组件重构 | `LevelCard.vue` | 0.5MD | ✅ 已完成 |
+| **DEV-P3.1.3** | 页面精细化 | 首页/游戏页/App | 0.5MD | ✅ 已完成 |
+| **TEST-P3.1.X** | 测试执行与验收 | - | 0.5MD | 🟢 **待验收** |
+
+**实际工时**: 约 1 小时
+
+> [!NOTE]
+> **交付成果**:
+> - `PageBackground.vue`: 动态 Gradient Mesh + Noise 纹理背景
+> - Glassmorphism: 全局毛玻璃效果 (`--glass-bg`, `--glass-blur`)
+> - 环形进度条: `GameView.vue` 头部 SVG 动画
+>
+> **@功能测试** 请验收以下场景：背景动画流畅度、毛玻璃在深浅主题下的表现、移动端性能。
+
+---
+
 ### 🔴 待开发任务 (Phase 1 完成后)
 
 #### Phase 2: 搜索与游戏化
@@ -667,6 +688,49 @@ export function useTheme() {
   }
 }
 ```
+
+---
+
+## 🎨 Phase 3: Premium Polish 技术实现
+
+### P3.1: Glassmorphism (毛玻璃) 系统
+
+**Design Tokens 扩展**:
+```css
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --glass-blur: blur(16px);
+}
+
+[data-theme="dark"] {
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+```
+
+**组件应用**:
+```css
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur); /* Safari 兼容 */
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+```
+
+### P3.2: Gradient Mesh (网格渐变)
+
+**PageBackground.vue 实现**:
+使用绝对定位的多个圆形光斑 + CSS 动画 (`animate-blob`) 实现流动的背景效果，配合 SVG `filter: url(#noise)` 叠加噪点纹理，提升质感。
+
+**性能优化**:
+- 使用 `transform: translate3d` 开启 GPU 加速
+- 移动端减少光斑数量以维持 60fps
+- `will-change: transform` 提示浏览器优化
 
 ---
 

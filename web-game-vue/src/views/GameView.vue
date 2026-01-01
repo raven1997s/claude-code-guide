@@ -1,6 +1,8 @@
 <template>
   <div class="game-view">
     <GenerativeBackground />
+    <!-- 新增动态 Mesh Gradient 背景 -->
+    <PageBackground />
 
     <!-- 浮动分享按钮 -->
     <n-button
@@ -33,28 +35,64 @@
       />
     </n-modal>
 
-    <n-space vertical :size="24" v-if="!currentLevel" class="game-content">
+    <n-space vertical :size="32" v-if="!currentLevel" class="game-content">
       <!-- 关卡选择界面 -->
-      <div class="game-header">
-        <n-button text @click="goHome" style="margin-bottom: 16px;">
-          <template #icon>
-            <n-icon :component="ArrowLeftIcon" />
-          </template>
-          返回首页
-        </n-button>
-        <n-h1><n-icon :component="GameIcon" /> CLI 命令互动学习</n-h1>
-        <n-text depth="3">通过模拟终端学习 Claude Code CLI 命令的使用技巧</n-text>
+      <div class="game-header glass-card">
+        <div class="header-left">
+          <n-button text @click="goHome" class="back-link">
+            <template #icon>
+              <n-icon :component="ArrowLeftIcon" />
+            </template>
+            返回首页
+          </n-button>
+          <h1 class="page-title">
+            <span class="icon-wrapper">
+              <n-icon :component="GameIcon" />
+            </span>
+            CLI 关卡挑战
+          </h1>
+          <p class="page-subtitle">完成关卡，点亮技能树，成为命令行专家</p>
+        </div>
+        
+        <!-- 环形进度条 -->
+        <div class="header-right">
+          <div class="progress-ring-container">
+            <svg class="progress-ring" width="80" height="80">
+              <circle
+                class="progress-ring-circle-bg"
+                stroke="rgba(255, 255, 255, 0.1)"
+                stroke-width="6"
+                fill="transparent"
+                r="36"
+                cx="40"
+                cy="40"
+              />
+              <circle
+                class="progress-ring-circle"
+                stroke="var(--color-success)"
+                stroke-width="6"
+                fill="transparent"
+                r="36"
+                cx="40"
+                cy="40"
+                :style="{ strokeDashoffset: progressOffset, strokeDasharray: circumference }"
+              />
+            </svg>
+            <div class="progress-text">
+              <span class="progress-value">{{ Math.round(progressPercent) }}%</span>
+            </div>
+          </div>
+          <div class="progress-label">总体进度</div>
+        </div>
       </div>
 
       <!-- 学习指南 -->
-      <n-card type="info">
-        <template #header>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <n-icon :component="LightbulbIcon" />
-            <span>新手指南</span>
-          </div>
-        </template>
-        <n-collapse>
+      <div class="guide-section glass-card">
+        <div class="section-header">
+          <n-icon :component="LightbulbIcon" />
+          <span>新手指南</span>
+        </div>
+        <n-collapse display-directive="show" arrow-placement="right">
           <n-collapse-item title="📚 什么是 Claude Code CLI？" name="what">
             <p>Claude Code CLI 是一个命令行工具，让你在终端中直接与 Claude AI 进行交互。它可以：</p>
             <ul>
@@ -73,127 +111,115 @@
               <li>查看反馈并完成关卡</li>
             </ol>
           </n-collapse-item>
-          <n-collapse-item title="💡 学习建议" name="tips">
-            <ul>
-              <li>按顺序学习，从"基础命令"开始</li>
-              <li>每个关卡都有提示，不确定时可以查看</li>
-              <li>完成所有关卡后会自动保存进度</li>
-              <li>建议在真实终端中练习学到的命令</li>
-            </ul>
-          </n-collapse-item>
         </n-collapse>
-      </n-card>
-
-      <!-- 进度统计 -->
-      <n-card>
-        <n-space :size="32" justify="center">
-          <n-statistic label="已完成" :value="completedLevels.length">
-            <template #suffix>/ {{ LEVELS.length }}</template>
-          </n-statistic>
-          <n-statistic label="完成率" :value="Math.round(progressPercent)">
-            <template #suffix>%</template>
-          </n-statistic>
-        </n-space>
-      </n-card>
+      </div>
 
       <!-- 分类标签页 -->
-      <n-tabs v-model:value="activeCategory" type="segment">
+      <n-tabs v-model:value="activeCategory" type="segment" animated>
         <n-tab-pane name="all" tab="全部关卡">
           <div class="level-grid">
-            <LevelCard
+            <div
               v-for="level in LEVELS"
               :key="level.id"
-              :level="level"
-              :completed="completedLevels.includes(level.id)"
-              @select="startLevel"
-            />
+              class="level-card-wrapper animate-fade-in-up"
+            >
+              <LevelCard
+                :level="level"
+                :completed="completedLevels.includes(level.id)"
+                @select="startLevel"
+              />
+            </div>
           </div>
         </n-tab-pane>
         <n-tab-pane v-for="(cat, key) in LEVEL_CATEGORIES" :key="key" :name="key" :tab="cat.label">
           <div class="level-grid">
-            <LevelCard
+            <div
               v-for="level in LEVELS.filter(l => l.category === key)"
               :key="level.id"
-              :level="level"
-              :completed="completedLevels.includes(level.id)"
-              @select="startLevel"
-            />
+              class="level-card-wrapper animate-fade-in-up"
+            >
+              <LevelCard
+                :level="level"
+                :completed="completedLevels.includes(level.id)"
+                @select="startLevel"
+              />
+            </div>
           </div>
         </n-tab-pane>
       </n-tabs>
     </n-space>
 
     <!-- 关卡游戏界面 -->
-    <n-space vertical :size="16" v-else>
+    <n-space vertical :size="24" v-else class="game-content">
       <!-- 关卡信息 -->
-      <n-card>
-        <n-space align="center" justify="space-between">
-          <n-space align="center">
-            <n-button quaternary @click="exitLevel">
-              <template #icon>
-                <n-icon :component="ArrowLeftIcon" />
-              </template>
-              返回
-            </n-button>
-            <n-h3>{{ currentLevel.name }}</n-h3>
-            <n-tag size="small" :type="completedLevels.includes(currentLevel.id) ? 'success' : 'default'">
-              {{ completedLevels.includes(currentLevel.id) ? '已完成' : '未完成' }}
+      <div class="level-header glass-card">
+        <div class="level-header-top">
+          <n-button quaternary @click="exitLevel" class="back-btn">
+            <template #icon>
+              <n-icon :component="ArrowLeftIcon" />
+            </template>
+            返回列表
+          </n-button>
+          <div class="level-badges">
+            <n-tag size="small" :type="completedLevels.includes(currentLevel.id) ? 'success' : 'default'" round>
+              {{ completedLevels.includes(currentLevel.id) ? '已完成' : '挑战中' }}
             </n-tag>
-          </n-space>
-          <n-tag>关卡 {{ currentLevel.id }} / {{ LEVELS.length }}</n-tag>
-        </n-space>
-      </n-card>
-
-      <!-- 任务说明 -->
-      <n-card title="任务目标">
-        <n-p>{{ currentLevel.objective }}</n-p>
-        <n-alert type="info" style="margin-top: 12px;">
-          <!-- eslint-disable-next-line vue/no-v-html -- 内容来自静态数据，XSS 风险可控 -->
-          <div v-html="currentLevel.task.replace(/`/g, '').replace(/\n/g, '<br>')"></div>
-        </n-alert>
-      </n-card>
+            <n-tag size="small" type="info" round>
+              关卡 {{ currentLevel.id }} / {{ LEVELS.length }}
+            </n-tag>
+          </div>
+        </div>
+        <h2 class="level-title">{{ currentLevel.name }}</h2>
+        <p class="level-objective">{{ currentLevel.objective }}</p>
+        
+        <div class="task-box">
+          <div class="task-label">当前任务</div>
+           <!-- eslint-disable-next-line vue/no-v-html -->
+          <div class="task-desc" v-html="currentLevel.task.replace(/`/g, '').replace(/\n/g, '<br>')"></div>
+        </div>
+      </div>
 
       <!-- 终端 (CLI 关卡) -->
-      <TerminalComponent
-        v-if="currentLevel.category !== 'vscode'"
-        ref="terminalRef"
-        :responses="TERMINAL_RESPONSES"
-        :required-commands="currentLevel.requiredCommands"
-        @command-executed="handleCommand"
-        @all-completed="handleAllCompleted"
-      />
+      <div class="terminal-wrapper glass-card no-padding">
+        <TerminalComponent
+          v-if="currentLevel.category !== 'vscode'"
+          ref="terminalRef"
+          :responses="TERMINAL_RESPONSES"
+          :required-commands="currentLevel.requiredCommands"
+          @command-executed="handleCommand"
+          @all-completed="handleAllCompleted"
+        />
 
-      <!-- VS Code 插件 (VS Code 关卡) -->
-      <VSCodeComponent
-        v-else
-        ref="vscodeRef"
-        :panel-only="true"
-        :level-data="currentLevel"
-        :conversations="VSCODE_CONVERSATIONS"
-        :required-actions="currentLevel.requiredActions || []"
-        :virtual-files="getFilesForLevel(currentLevel.id)"
-        @action-completed="handleVSCodeAction"
-        @all-completed="handleAllCompleted"
-      />
+        <!-- VS Code 插件 (VS Code 关卡) -->
+        <VSCodeComponent
+          v-else
+          ref="vscodeRef"
+          :panel-only="true"
+          :level-data="currentLevel"
+          :conversations="VSCODE_CONVERSATIONS"
+          :required-actions="currentLevel.requiredActions || []"
+          :virtual-files="getFilesForLevel(currentLevel.id)"
+          @action-completed="handleVSCodeAction"
+          @all-completed="handleAllCompleted"
+        />
+      </div>
 
       <!-- 完成卡片 - 显示在任务完成后 -->
-      <n-card v-if="showCompletionCard" class="completion-card" type="success">
-        <template #header>
-          <div class="completion-header">
-            <span class="completion-icon">🎉</span>
-            <span class="completion-title">关卡完成！</span>
-          </div>
-        </template>
+      <div v-if="showCompletionCard" class="completion-card glass-card animate-scale-in">
         <div class="completion-content">
+          <div class="completion-icon">🎉</div>
+          <h3 class="completion-title">挑战成功！</h3>
           <p class="completion-message">恭喜完成 "{{ currentLevel.name }}"</p>
-          <p v-if="earnedBadge" class="completion-badge">获得徽章：{{ earnedBadge.name }}</p>
-        </div>
-        <template #footer>
-          <n-space justify="center">
+          <p v-if="earnedBadge" class="completion-badge">
+            <n-icon :component="CheckIcon" /> 获得徽章：{{ earnedBadge.name }}
+          </p>
+          
+          <div class="completion-actions">
             <n-button
               v-if="nextLevelData"
               type="primary"
               size="large"
+              class="action-btn"
               @click="goToNextLevel"
             >
               <template #icon>
@@ -201,35 +227,36 @@
               </template>
               下一关
             </n-button>
-            <n-button size="large" @click="exitLevel">
+            <n-button size="large" class="action-btn" @click="exitLevel">
               返回列表
             </n-button>
-          </n-space>
-        </template>
-      </n-card>
+          </div>
+        </div>
+      </div>
 
       <!-- 完成按钮 - 未完成时显示 -->
-      <n-card v-else>
+      <div v-else class="control-bar glass-card">
         <n-space justify="center">
           <n-button
             type="primary"
             size="large"
             :disabled="!allRequiredCompleted"
             @click="completeLevel"
+            class="control-btn"
           >
             <template #icon>
               <n-icon :component="CheckIcon" />
             </template>
             {{ allRequiredCompleted ? '完成关卡' : `完成任务 (${completedRequired}/${totalRequired})` }}
           </n-button>
-          <n-button size="large" @click="skipLevel">
+          <n-button size="large" @click="skipLevel" class="control-btn">
             <template #icon>
               <n-icon :component="SkipIcon" />
             </template>
             跳过
           </n-button>
         </n-space>
-      </n-card>
+      </div>
     </n-space>
   </div>
 </template>
@@ -238,8 +265,8 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import {
-  NCard, NSpace, NH1, NH3, NText, NIcon, NButton, NTag, NTabs, NTabPane,
-  NStatistic, NP, NAlert, NCollapse, NCollapseItem, NModal
+  NSpace, NIcon, NButton, NTag, NTabs, NTabPane,
+  NCollapse, NCollapseItem, NModal
 } from 'naive-ui'
 import {
   Gamepad as GameIcon, ArrowLeft as ArrowLeftIcon, Check as CheckIcon,
@@ -252,6 +279,7 @@ import LevelCard from '@/components/LevelCard.vue'
 import TerminalComponent from '@/components/TerminalComponent.vue'
 import VSCodeComponent from '@/components/VSCodeComponent.vue'
 import GenerativeBackground from '@/components/GenerativeBackground.vue'
+import PageBackground from '@/components/PageBackground.vue'
 import ShareCard from '@/components/ShareCard.vue'
 
 const router = useRouter()
@@ -274,6 +302,14 @@ const nextLevelData = ref(null)
 
 const progressPercent = computed(() => {
   return (completedLevels.value.length / LEVELS.length) * 100
+})
+
+// 环形进度条参数
+const radius = 36
+const circumference = 2 * Math.PI * radius
+const progressOffset = computed(() => {
+  const percent = progressPercent.value
+  return circumference - (percent / 100) * circumference
 })
 
 // 获取当前关卡的总任务数（兼容 requiredCommands 和 requiredActions）
@@ -398,47 +434,264 @@ function goHome() {
 
 <style scoped>
 .game-view {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-8) var(--spacing-6);
   min-height: 100vh;
-  background: linear-gradient(
-    180deg,
-    var(--color-bg-secondary) 0%,
-    var(--color-bg-tertiary) 100%
-  );
+  /* 背景由 PageBackground 接管 */
 }
 
 .game-content {
   position: relative;
   z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-8) var(--spacing-6);
 }
 
+/* ========================================
+   Game Header (Glassmorphism)
+   ======================================== */
 .game-header {
-  text-align: center;
-  padding: var(--spacing-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-8);
+  /* .glass-card 样式在全局 */
 }
 
-.game-header :deep(.n-h1) {
+.header-left {
+  flex: 1;
+}
+
+.back-link {
+  margin-bottom: var(--spacing-4);
+  color: var(--color-text-secondary);
+}
+
+.page-title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2) 0;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--spacing-3);
 }
 
-.game-header :deep(.n-h1 .n-icon) {
+.icon-wrapper {
   color: var(--color-primary-500);
+  background: rgba(99, 102, 241, 0.1);
+  padding: 8px;
+  border-radius: var(--radius-md);
+  display: flex;
 }
 
+.page-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+  margin: 0;
+}
+
+/* ========================================
+   Progress Ring
+   ======================================== */
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.progress-ring-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle-bg {
+  transition: stroke 0.3s;
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  stroke-linecap: round;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-value {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.progress-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ========================================
+   Guide Section
+   ======================================== */
+.guide-section {
+  padding: var(--spacing-6);
+  margin-bottom: var(--spacing-8);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-4);
+  color: var(--color-primary-600);
+}
+
+/* ========================================
+   Level Grid
+   ======================================== */
 .level-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--spacing-4);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-6);
+  padding: var(--spacing-2);
 }
 
-/* 浮动分享按钮 */
+.level-card-wrapper {
+  height: 100%;
+}
+
+/* ========================================
+   Level Header
+   ======================================== */
+.level-header {
+  padding: var(--spacing-6);
+}
+
+.level-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-4);
+}
+
+.level-badges {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.level-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-2) 0;
+  color: var(--color-text-primary);
+}
+
+.level-objective {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+.task-box {
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  border-left: 4px solid var(--color-primary-500);
+}
+
+.task-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-600);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-2);
+}
+
+.task-desc {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-primary);
+}
+
+/* ========================================
+   Completion Card
+   ======================================== */
+.completion-card {
+  text-align: center;
+  padding: var(--spacing-8);
+  border: 1px solid var(--color-success);
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.1) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+
+.completion-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-4);
+  animation: bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.completion-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-success);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.completion-message {
+  font-size: var(--text-lg);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+.completion-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--color-success);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-semibold);
+}
+
+.completion-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-6);
+}
+
+/* ========================================
+   Control Bar
+   ======================================== */
+.control-bar {
+  padding: var(--spacing-6);
+}
+
+/* ========================================
+   Utilities
+   ======================================== */
+.no-padding {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
 .share-fab {
   position: fixed;
   bottom: var(--spacing-8);
@@ -449,114 +702,33 @@ function goHome() {
 }
 
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.share-fab:hover {
-  animation: none;
-  transform: scale(1.1);
-}
-
-/* 卡片样式覆盖 */
-:deep(.n-card) {
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Tabs 样式 */
-:deep(.n-tabs .n-tabs-tab) {
-  transition: all var(--duration-base) var(--ease-out);
-}
-
-/* 完成卡片样式 */
-.completion-card {
-  animation: slideIn var(--duration-slow) var(--ease-out);
-}
-
-.completion-header {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
-  font-size: var(--text-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-}
-
-.completion-icon {
-  font-size: 28px;
-  animation: bounce 0.5s var(--ease-out);
-}
-
-.completion-title {
-  color: var(--color-success);
-}
-
-.completion-content {
-  text-align: center;
-  padding: var(--spacing-3) 0;
-}
-
-.completion-message {
-  font-size: var(--text-base);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-3) 0;
-  font-weight: var(--font-weight-semibold);
-}
-
-.completion-badge {
-  font-size: var(--text-sm);
-  color: #ec4899;
-  margin: 0;
-  font-family: var(--font-mono);
-  padding: var(--spacing-2) var(--spacing-4);
-  background: rgba(236, 72, 153, 0.1);
-  border-radius: var(--radius-sm);
-  display: inline-block;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes bounce {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
 /* 响应式 */
 @media (max-width: 768px) {
-  .game-view {
-    padding: var(--spacing-4) var(--spacing-4);
+  .game-header {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-6);
   }
 
   .level-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: var(--spacing-3);
+    grid-template-columns: 1fr;
   }
 
-  .share-fab {
-    bottom: var(--spacing-4);
-    right: var(--spacing-4);
+  .completion-actions {
+    flex-direction: column;
+  }
+
+  .action-btn, .control-btn {
+    width: 100%;
   }
 }
 </style>

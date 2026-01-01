@@ -3,24 +3,29 @@
     <PageBackground />
 
     <div class="content-wrapper">
-      <n-space vertical :size="32" align="center">
-        <!-- Hero 区域 (Clean Minimal 风格) -->
-        <div class="hero-section">
+      <n-space vertical :size="64" align="center">
+        <!-- Hero 区域 (Premium Experience) -->
+        <div class="hero-section glass-card">
+          <div class="hero-badge animate-pulse">
+            <n-icon :component="SparkleIcon" />
+            <span>全新升级 Grade 2.2</span>
+          </div>
           <h1 class="hero-title">
-            Claude Code
-            <span class="gradient-text">CLI 学习指南</span>
+            <span class="gradient-text-animated">Claude Code CLI</span>
+            <br>
+            <span class="subtitle-text">学习指南</span>
           </h1>
           <p class="hero-subtitle">
-            通过互动游戏和实战教程，掌握 Claude Code 命令行工具
+            通过沉浸式互动游戏和实战教程，掌握 Claude Code 命令行工具的高级用法
           </p>
           <div class="hero-actions">
-            <n-button type="primary" size="large" @click="navigateTo('/game')">
+            <n-button type="primary" size="large" class="btn-shine" @click="navigateTo('/game')">
               <template #icon>
                 <n-icon :component="GameIcon" />
               </template>
               开始学习
             </n-button>
-            <n-button size="large" ghost @click="navigateTo('/reference')">
+            <n-button size="large" ghost class="btn-shine" @click="navigateTo('/reference')">
               <template #icon>
                 <n-icon :component="BookIcon" />
               </template>
@@ -29,84 +34,42 @@
           </div>
         </div>
 
-        <!-- 特性卡片 -->
+        <!-- 特性卡片 (Glassmorphism) -->
         <div class="features-grid">
           <div
             v-for="(feature, index) in features"
             :key="feature.title"
-            class="feature-card stagger-item animate-fade-in-up"
+            class="feature-card card card-hover stagger-item animate-fade-in-up"
             :style="{ animationDelay: `${index * 100}ms` }"
           >
-            <div class="feature-icon">
-              <n-icon size="32" :component="feature.icon" />
+            <div class="feature-icon-wrapper">
+              <div class="feature-icon" :class="`icon-${index}`">
+                <n-icon size="32" :component="feature.icon" />
+              </div>
             </div>
             <h3 class="feature-title">{{ feature.title }}</h3>
             <p class="feature-desc">{{ feature.desc }}</p>
+            <div class="feature-arrow">
+              <n-icon :component="ArrowIcon" />
+            </div>
           </div>
         </div>
 
-        <!-- 统计卡片 -->
+        <!-- 统计卡片 (Gradient Style) -->
         <div class="stats-section">
           <div
             v-for="(stat, index) in stats"
             :key="stat.label"
-            class="stat-card animate-fade-in-up"
+            class="stat-card card card-hover animate-fade-in-up"
             :class="`stat-${index}`"
             :style="{ animationDelay: `${index * 100 + 300}ms` }"
           >
-            <div class="stat-number animate-number-pop" :style="{ animationDelay: `${index * 100 + 500}ms` }">{{ stat.value }}</div>
+            <div class="stat-number animate-number-pop" :style="{ animationDelay: `${index * 100 + 500}ms` }">
+              {{ stat.value }}
+            </div>
             <div class="stat-label">{{ stat.label }}</div>
           </div>
         </div>
-
-        <!-- 学习路径 -->
-        <n-card class="learning-path-card">
-          <template #header>
-            <div class="card-header">
-              <n-icon :component="RouteIcon" />
-              <span>学习路径</span>
-            </div>
-          </template>
-          <n-steps vertical :current="1" size="small">
-            <n-step title="CLI 基础">
-              <template #description>
-                学习基本的 CLI 命令和参数（关卡 1-10）
-              </template>
-            </n-step>
-            <n-step title="会话命令">
-              <template #description>
-                掌握交互式会话中的斜杠命令（关卡 11-17）
-              </template>
-            </n-step>
-            <n-step title="综合应用">
-              <template #description>
-                综合运用所学知识完成复杂任务（关卡 18-25）
-              </template>
-            </n-step>
-          </n-steps>
-        </n-card>
-
-        <!-- 热门搜索 -->
-        <n-card class="popular-search-card">
-          <template #header>
-            <div class="card-header">
-              <n-icon :component="BoltIcon" />
-              <span>热门搜索</span>
-            </div>
-          </template>
-          <n-space>
-            <n-tag
-              v-for="item in popularSearches"
-              :key="item.query"
-              round
-              size="medium"
-              class="search-tag"
-              @click="handlePopularSearch(item.query)"
-            >
-              {{ item.query }}
-            </n-tag>
-          </n-space>
-        </n-card>
       </n-space>
     </div>
   </div>
@@ -114,13 +77,13 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { NCard, NSpace, NButton, NIcon, NSteps, NStep, NTag } from 'naive-ui'
+import { NCard, NSpace, NButton, NIcon } from 'naive-ui'
 import {
   Gamepad as GameIcon,
   Book as BookIcon,
   Terminal as TerminalIcon,
-  Bolt as BoltIcon,
-  Route as RouteIcon
+  ArrowRight as ArrowIcon,
+  Star as SparkleIcon
 } from '@vicons/fa'
 import PageBackground from '@/components/PageBackground.vue'
 
@@ -129,90 +92,87 @@ const router = useRouter()
 /** 特性列表 */
 const features = [
   {
-    title: '互动游戏',
-    desc: '25+ 关卡精心设计，模拟终端实战学习',
+    title: '互动闯关',
+    desc: '25+ 精心设计的关卡，在模拟终端中实战演练，建立肌肉记忆',
     icon: GameIcon
   },
   {
     title: '完整文档',
-    desc: 'CLI 参数、斜杠命令、模糊搜索全覆盖',
+    desc: '收录所有 CLI 参数、快捷键与斜杠命令，支持模糊搜索',
     icon: BookIcon
   },
   {
     title: '无需安装',
-    desc: '浏览器运行，随时学习，即刻上手',
+    desc: '纯浏览器运行环境，零配置即刻上手，随时随地学习',
     icon: TerminalIcon
   }
 ]
 
 /** 统计数据 */
 const stats = [
-  { value: '25+', label: '互动关卡' },
-  { value: '80+', label: '命令文档' },
-  { value: '5', label: '学习路径' }
+  { value: '25+', label: '实战关卡' },
+  { value: '100%', label: '覆盖率' },
+  { value: 'Pro', label: '进阶技巧' }
 ]
 
-/** 热门搜索 */
-const popularSearches = [
-  { query: 'help' },
-  { query: 'commit' },
-  { query: 'claude -p' },
-  { query: 'model' },
-  { query: 'clear' }
-]
-
-/**
- * 导航到指定路由
- * @param {string} path - 路由路径
- */
 function navigateTo(path) {
   router.push(path)
-}
-
-/**
- * 处理热门搜索点击
- * @param {string} _query - 搜索关键词 (未使用，保留参数)
- */
-function handlePopularSearch(_query) {
-  router.push('/search')
 }
 </script>
 
 <style scoped>
 .home-view {
-  position: relative;
   min-height: 100vh;
-  background: linear-gradient(
-    180deg,
-    var(--color-bg-secondary) 0%,
-    var(--color-bg-tertiary) 100%
-  );
+  /* 背景由 PageBackground 接管 */
 }
 
 .content-wrapper {
   position: relative;
   z-index: 2;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-12) var(--spacing-6);
+  padding: var(--spacing-12) var(--spacing-8);
 }
 
 /* ========================================
-   Hero 区域 - Premium Experience
+   Hero 区域
    ======================================== */
 .hero-section {
   text-align: center;
-  padding: var(--spacing-16) var(--spacing-6);
-  background: linear-gradient(
-    135deg,
-    var(--color-bg-secondary) 0%,
-    var(--color-primary-50) 50%,
-    var(--color-bg-secondary) 100%
-  );
-  background-size: 200% 200%;
-  animation: gradientShift 10s ease infinite;
-  border-radius: var(--radius-xl);
+  padding: var(--spacing-16) var(--spacing-8);
   margin-bottom: var(--spacing-8);
+  /* 使用全局 .glass-card 样式，此处仅做布局调整 */
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-6);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  margin: 0 0 var(--spacing-6) 0;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text-animated {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 5s ease infinite;
+  background-size: 200% 200%;
 }
 
 @keyframes gradientShift {
@@ -220,42 +180,51 @@ function handlePopularSearch(_query) {
   50% { background-position: 100% 50%; }
 }
 
-.hero-title {
-  font-size: var(--text-4xl);
-  font-weight: var(--font-weight-bold);
+.subtitle-text {
+  font-size: 0.6em;
   color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-4) 0;
-  line-height: var(--leading-tight);
-  font-family: var(--font-sans);
-}
-
-.gradient-text {
-  display: block;
-  background: linear-gradient(
-    135deg,
-    var(--color-primary-500),
-    var(--color-primary-700)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: var(--font-weight-medium);
 }
 
 .hero-subtitle {
-  font-size: var(--text-lg);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
   color: var(--color-text-secondary);
-  margin: 0 0 var(--spacing-8) 0;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: var(--leading-relaxed);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-10);
+  line-height: 1.6;
 }
 
 .hero-actions {
   display: flex;
-  justify-content: center;
   gap: var(--spacing-4);
+  justify-content: center;
   flex-wrap: wrap;
+}
+
+/* 按钮光效 */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-shine:hover::after {
+  left: 100%;
 }
 
 /* ========================================
@@ -263,178 +232,116 @@ function handlePopularSearch(_query) {
    ======================================== */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-6);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-8);
   width: 100%;
 }
 
 .feature-card {
   padding: var(--spacing-8);
-  text-align: center;
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--duration-slow) var(--ease-out);
-  transform-style: preserve-3d;
-  opacity: 0;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.feature-card:hover {
-  border-color: var(--color-primary-300);
-  box-shadow: 0 16px 40px rgba(99, 102, 241, 0.2);
-  transform: perspective(1000px) rotateX(2deg) rotateY(2deg) translateY(-6px);
+.feature-icon-wrapper {
+  margin-bottom: var(--spacing-6);
 }
 
 .feature-icon {
   width: 64px;
   height: 64px;
-  margin: 0 auto var(--spacing-4);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary-50);
-  border-radius: var(--radius-md);
-  color: var(--color-primary-600);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-secondary);
+  transition: all 0.3s ease;
 }
 
+.feature-card:hover .feature-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.icon-0 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; }
+.icon-1 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #ffffff; }
+.icon-2 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #ffffff; }
+
 .feature-title {
-  font-size: var(--text-xl);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-2) 0;
+  margin: 0 0 var(--spacing-3) 0;
 }
 
 .feature-desc {
-  font-size: var(--text-base);
+  font-size: var(--font-base);
   color: var(--color-text-secondary);
+  line-height: 1.6;
   margin: 0;
-  line-height: var(--leading-relaxed);
+  flex-grow: 1;
+}
+
+.feature-arrow {
+  margin-top: var(--spacing-6);
+  color: var(--color-primary-500);
+  transition: transform 0.3s ease;
+  align-self: flex-start;
+}
+
+.feature-card:hover .feature-arrow {
+  transform: translateX(8px);
 }
 
 /* ========================================
-   统计卡片 - 渐变风格
+   统计卡片
    ======================================== */
 .stats-section {
-  display: flex;
-  gap: var(--spacing-6);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-8);
   width: 100%;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .stat-card {
-  flex: 1;
-  min-width: 160px;
-  max-width: 200px;
-  padding: var(--spacing-6);
-  border-radius: var(--radius-lg);
+  padding: var(--spacing-8);
   text-align: center;
-  color: #ffffff;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.stat-0 {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary-500) 0%,
-    var(--color-primary-700) 100%
-  );
-}
-
-.stat-1 {
-  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
-}
-
-.stat-2 {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
+.stat-0 { background: var(--gradient-primary); color: #ffffff; border: none; }
+.stat-1 { background: var(--gradient-accent); color: #ffffff; border: none; }
+.stat-2 { background: var(--gradient-ocean); color: #ffffff; border: none; }
 
 .stat-number {
-  font-size: var(--text-4xl);
+  font-size: var(--font-4xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--leading-tight);
-  margin-bottom: var(--spacing-1);
+  margin-bottom: var(--spacing-2);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .stat-label {
-  font-size: var(--text-sm);
-  font-family: var(--font-mono);
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-medium);
   opacity: 0.9;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-/* ========================================
-   学习路径卡片
-   ======================================== */
-.learning-path-card {
-  width: 100%;
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-lg);
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
-  font-size: var(--text-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-}
-
-.card-header .n-icon {
-  color: var(--color-primary-500);
-}
-
-/* ========================================
-   热门搜索卡片
-   ======================================== */
-.popular-search-card {
-  width: 100%;
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-lg);
-}
-
-.search-tag {
-  font-family: var(--font-mono);
-  cursor: pointer;
-  transition: all var(--duration-base) var(--ease-out);
-}
-
-.search-tag:hover {
-  background: var(--color-primary-500) !important;
-  color: #ffffff !important;
-  border-color: var(--color-primary-500) !important;
-}
-
-/* ========================================
-   响应式
-   ======================================== */
+/* 移动端适配 */
 @media (max-width: 768px) {
-  .content-wrapper {
-    padding: var(--spacing-8) var(--spacing-4);
-  }
-
-  .hero-section {
-    padding: var(--spacing-8) var(--spacing-4);
-  }
-
   .hero-title {
-    font-size: var(--text-3xl);
+    font-size: 2.5rem;
   }
-
-  .hero-subtitle {
-    font-size: var(--text-base);
+  .features-grid {
+    grid-template-columns: 1fr;
   }
-
   .stats-section {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stat-card {
-    max-width: 100%;
-    width: 100%;
+    grid-template-columns: 1fr;
   }
 }
 </style>

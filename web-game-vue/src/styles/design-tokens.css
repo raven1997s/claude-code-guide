@@ -7,192 +7,210 @@
  */
 
 :root {
-  /* ========================================
+   /* ========================================
      1. 色彩系统 (Color System)
      ======================================== */
 
-  /* 主色调 - Indigo */
-  --color-primary-50: #eef2ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #4f46e5;
-  --color-primary-700: #4338ca;
-  --color-primary-800: #3730a3;
-  --color-primary-900: #312e81;
+   /* 主色调 - Indigo */
+   --color-primary-50: #eef2ff;
+   --color-primary-100: #e0e7ff;
+   --color-primary-200: #c7d2fe;
+   --color-primary-300: #a5b4fc;
+   --color-primary-400: #818cf8;
+   --color-primary-500: #6366f1;
+   --color-primary-600: #4f46e5;
+   --color-primary-700: #4338ca;
+   --color-primary-800: #3730a3;
+   --color-primary-900: #312e81;
 
-  /* 语义化颜色 */
-  --color-success: #10b981;
-  --color-success-light: #d1fae5;
-  --color-warning: #f59e0b;
-  --color-warning-light: #fef3c7;
-  --color-error: #ef4444;
-  --color-error-light: #fee2e2;
-  --color-info: #3b82f6;
-  --color-info-light: #dbeafe;
+   /* 语义化颜色 */
+   --color-success: #10b981;
+   --color-success-light: #d1fae5;
+   --color-warning: #f59e0b;
+   --color-warning-light: #fef3c7;
+   --color-error: #ef4444;
+   --color-error-light: #fee2e2;
+   --color-info: #3b82f6;
+   --color-info-light: #dbeafe;
 
-  /* 中性色 (浅色主题 - 默认) */
-  --color-bg-base: #ffffff;
-  --color-bg-secondary: #f8f9fc;
-  --color-bg-tertiary: #f1f5f9;
-  --color-bg-elevated: #ffffff;
+   /* 高级渐变色 */
+   --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+   --gradient-ocean: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+   --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+   --gradient-midnight: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
 
-  --color-text-primary: #1a1a2e;
-  --color-text-secondary: #64748b;
-  --color-text-tertiary: #94a3b8;
-  --color-text-disabled: #cbd5e1;
+   /* 毛玻璃效果 */
+   --glass-bg: rgba(255, 255, 255, 0.7);
+   --glass-border: rgba(255, 255, 255, 0.3);
+   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+   --glass-blur: blur(20px) saturate(180%);
 
-  --color-border-default: rgba(0, 0, 0, 0.08);
-  --color-border-strong: rgba(0, 0, 0, 0.12);
-  --color-border-subtle: rgba(0, 0, 0, 0.04);
+   /* 中性色 (浅色主题 - 默认) */
+   --color-bg-base: #ffffff;
+   --color-bg-secondary: #f8f9fc;
+   --color-bg-tertiary: #f1f5f9;
+   --color-bg-elevated: #ffffff;
 
-  /* ========================================
+   --color-text-primary: #1a1a2e;
+   --color-text-secondary: #64748b;
+   --color-text-tertiary: #94a3b8;
+   --color-text-disabled: #cbd5e1;
+
+   --color-border-default: rgba(0, 0, 0, 0.08);
+   --color-border-strong: rgba(0, 0, 0, 0.12);
+   --color-border-subtle: rgba(0, 0, 0, 0.04);
+
+   /* ========================================
      2. 间距系统 (Spacing System)
      基于 4px 基准网格
      ======================================== */
-  --spacing-0: 0;
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 20px;
-  --spacing-6: 24px;
-  --spacing-8: 32px;
-  --spacing-10: 40px;
-  --spacing-12: 48px;
-  --spacing-16: 64px;
+   --spacing-0: 0;
+   --spacing-1: 4px;
+   --spacing-2: 8px;
+   --spacing-3: 12px;
+   --spacing-4: 16px;
+   --spacing-5: 20px;
+   --spacing-6: 24px;
+   --spacing-8: 32px;
+   --spacing-10: 40px;
+   --spacing-12: 48px;
+   --spacing-16: 64px;
 
-  /* ========================================
+   /* ========================================
      3. 圆角系统 (Border Radius)
      ======================================== */
-  --radius-none: 0;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-full: 9999px;
+   --radius-none: 0;
+   --radius-sm: 8px;
+   --radius-md: 12px;
+   --radius-lg: 16px;
+   --radius-xl: 20px;
+   --radius-full: 9999px;
 
-  /* ========================================
+   /* ========================================
      4. 阴影系统 (Box Shadow)
      ======================================== */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
-  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.04);
-  --shadow-primary: 0 4px 16px rgba(99, 102, 241, 0.2);
+   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+   --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+   --shadow-primary: 0 4px 16px rgba(99, 102, 241, 0.2);
 
-  /* ========================================
+   /* ========================================
      5. 字体系统 (Typography)
      ======================================== */
 
-  /* 字体族 */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  --font-mono: 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New',
-    monospace;
+   /* 字体族 */
+   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+   --font-mono: 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New',
+      monospace;
 
-  /* 字号 Scale */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
+   /* 字号 Scale */
+   --text-xs: 0.75rem;
+   --text-sm: 0.875rem;
+   --text-base: 1rem;
+   --text-lg: 1.125rem;
+   --text-xl: 1.25rem;
+   --text-2xl: 1.5rem;
+   --text-3xl: 1.875rem;
+   --text-4xl: 2.25rem;
 
-  /* 字重 */
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+   /* 字重 */
+   --font-weight-normal: 400;
+   --font-weight-medium: 500;
+   --font-weight-semibold: 600;
+   --font-weight-bold: 700;
 
-  /* 行高 */
-  --leading-tight: 1.25;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.75;
+   /* 行高 */
+   --leading-tight: 1.25;
+   --leading-normal: 1.5;
+   --leading-relaxed: 1.75;
 
-  /* ========================================
+   /* ========================================
      6. 动画系统 (Animation)
      ======================================== */
 
-  /* 缓动函数 */
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+   /* 缓动函数 */
+   --ease-in: cubic-bezier(0.4, 0, 1, 1);
+   --ease-out: cubic-bezier(0, 0, 0.2, 1);
+   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-  /* 持续时间 */
-  --duration-fast: 150ms;
-  --duration-base: 200ms;
-  --duration-slow: 300ms;
-  --duration-slower: 500ms;
+   /* 持续时间 */
+   --duration-fast: 150ms;
+   --duration-base: 200ms;
+   --duration-slow: 300ms;
+   --duration-slower: 500ms;
 
-  /* ========================================
+   /* ========================================
      7. Z-index 层级
      ======================================== */
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-fixed: 300;
-  --z-modal-backdrop: 400;
-  --z-modal: 500;
-  --z-popover: 600;
-  --z-tooltip: 700;
+   --z-dropdown: 100;
+   --z-sticky: 200;
+   --z-fixed: 300;
+   --z-modal-backdrop: 400;
+   --z-modal: 500;
+   --z-popover: 600;
+   --z-tooltip: 700;
 }
 
 /* ========================================
    深色主题 (Dark Theme)
    ======================================== */
 [data-theme='dark'] {
-  /* 主色调 - 稍微亮一点的 Indigo */
-  --color-primary-50: #1e1b4b;
-  --color-primary-100: #312e81;
-  --color-primary-200: #3730a3;
-  --color-primary-300: #4338ca;
-  --color-primary-400: #4f46e5;
-  --color-primary-500: #818cf8;
-  --color-primary-600: #a5b4fc;
-  --color-primary-700: #c7d2fe;
-  --color-primary-800: #e0e7ff;
-  --color-primary-900: #eef2ff;
+   /* 主色调 - 稍微亮一点的 Indigo */
+   --color-primary-50: #1e1b4b;
+   --color-primary-100: #312e81;
+   --color-primary-200: #3730a3;
+   --color-primary-300: #4338ca;
+   --color-primary-400: #4f46e5;
+   --color-primary-500: #818cf8;
+   --color-primary-600: #a5b4fc;
+   --color-primary-700: #c7d2fe;
+   --color-primary-800: #e0e7ff;
+   --color-primary-900: #eef2ff;
 
-  /* 语义化颜色 */
-  --color-success: #34d399;
-  --color-success-light: #064e3b;
-  --color-warning: #fbbf24;
-  --color-warning-light: #78350f;
-  --color-error: #f87171;
-  --color-error-light: #7f1d1d;
-  --color-info: #60a5fa;
-  --color-info-light: #1e3a8a;
+   /* 语义化颜色 */
+   --color-success: #34d399;
+   --color-success-light: #064e3b;
+   --color-warning: #fbbf24;
+   --color-warning-light: #78350f;
+   --color-error: #f87171;
+   --color-error-light: #7f1d1d;
+   --color-info: #60a5fa;
+   --color-info-light: #1e3a8a;
 
-  /* 中性色 (深色主题) */
-  --color-bg-base: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-bg-tertiary: #334155;
-  --color-bg-elevated: #1e293b;
+   /* 中性色 (深色主题) */
+   --color-bg-base: #0f172a;
+   --color-bg-secondary: #1e293b;
+   --color-bg-tertiary: #334155;
+   --color-bg-elevated: #1e293b;
 
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-text-tertiary: #64748b;
-  --color-text-disabled: #475569;
+   --color-text-primary: #f1f5f9;
+   --color-text-secondary: #94a3b8;
+   --color-text-tertiary: #64748b;
+   --color-text-disabled: #475569;
 
-  --color-border-default: rgba(255, 255, 255, 0.1);
-  --color-border-strong: rgba(255, 255, 255, 0.15);
-  --color-border-subtle: rgba(255, 255, 255, 0.05);
+   --color-border-default: rgba(255, 255, 255, 0.1);
+   --color-border-strong: rgba(255, 255, 255, 0.15);
+   --color-border-subtle: rgba(255, 255, 255, 0.05);
 
-  /* 深色主题阴影 - 更深 */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
-  --shadow-primary: 0 4px 16px rgba(129, 140, 248, 0.3);
+   /* 深色模式毛玻璃 */
+   --glass-bg: rgba(30, 41, 59, 0.7);
+   --glass-border: rgba(255, 255, 255, 0.1);
+   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+   /* 深色主题阴影 - 更深 */
+   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+   --shadow-primary: 0 4px 16px rgba(129, 140, 248, 0.3);
 }
 
 /* ========================================
@@ -201,10 +219,10 @@
 *,
 *::before,
 *::after {
-  transition-property: background-color, border-color, color, box-shadow, fill,
-    stroke;
-  transition-duration: var(--duration-slow);
-  transition-timing-function: var(--ease-out);
+   transition-property: background-color, border-color, color, box-shadow, fill,
+      stroke;
+   transition-duration: var(--duration-slow);
+   transition-timing-function: var(--ease-out);
 }
 
 /* 特殊元素禁用过渡 (性能优化) */
@@ -212,5 +230,56 @@ img,
 video,
 canvas,
 svg path {
-  transition: none !important;
+   transition: none !important;
+}
+
+/* ========================================
+   8. 全局组件 (Global Components)
+   ======================================== */
+
+/* 全局卡片样式 */
+.card {
+   background: var(--glass-bg);
+   backdrop-filter: var(--glass-blur);
+   -webkit-backdrop-filter: var(--glass-blur);
+   border: 1px solid var(--glass-border);
+   border-radius: var(--radius-xl);
+   padding: var(--spacing-6);
+   box-shadow: var(--glass-shadow);
+   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+   position: relative;
+   overflow: hidden;
+}
+
+/* 卡片悬停效果 */
+.card.card-hover:hover {
+   transform: translateY(-8px) scale(1.01);
+   box-shadow:
+      0 25px 50px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* 光晕效果 */
+.card::before {
+   content: '';
+   position: absolute;
+   inset: 0;
+   border-radius: inherit;
+   background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+         rgba(99, 102, 241, 0.08),
+         transparent 40%);
+   opacity: 0;
+   transition: opacity 0.3s;
+   pointer-events: none;
+   z-index: 1;
+}
+
+.card:hover::before {
+   opacity: 1;
+}
+
+/* 卡片内容 */
+.card>* {
+   position: relative;
+   z-index: 2;
 }
