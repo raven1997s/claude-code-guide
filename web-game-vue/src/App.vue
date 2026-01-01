@@ -2,6 +2,9 @@
   <n-config-provider :theme="isDark ? darkTheme : null">
     <n-dialog-provider>
       <n-message-provider>
+        <!-- 跳过链接 - 可访问性增强 -->
+        <a href="#main-content" class="skip-link">跳到主内容</a>
+
         <n-layout class="app-layout">
           <!-- 导航栏 -->
           <n-layout-header bordered class="header">
@@ -15,14 +18,9 @@
               <!-- 桌面端导航 -->
               <div class="nav-desktop">
                 <n-space :size="8">
-                  <n-button
-                    v-for="item in menuItems"
-                    :key="item.key"
-                    :type="activeKey === item.key ? 'primary' : 'default'"
-                    :ghost="activeKey !== item.key"
-                    size="medium"
-                    @click="router.push(item.key)"
-                  >
+                  <n-button v-for="item in menuItems" :key="item.key"
+                    :type="activeKey === item.key ? 'primary' : 'default'" :ghost="activeKey !== item.key" size="medium"
+                    @click="router.push(item.key)">
                     <template #icon>
                       <n-icon :component="item.icon" />
                     </template>
@@ -30,13 +28,8 @@
                   </n-button>
 
                   <!-- 主题切换按钮 -->
-                  <n-button
-                    circle
-                    quaternary
-                    size="medium"
-                    :aria-label="isDark ? '切换到浅色主题' : '切换到深色主题'"
-                    @click="toggleTheme"
-                  >
+                  <n-button circle quaternary size="medium" :aria-label="isDark ? '切换到浅色主题' : '切换到深色主题'"
+                    @click="toggleTheme">
                     <template #icon>
                       <n-icon :component="isDark ? SunIcon : MoonIcon" />
                     </template>
@@ -46,24 +39,13 @@
 
               <!-- 移动端汉堡菜单 -->
               <div class="nav-mobile">
-                <n-button
-                  circle
-                  quaternary
-                  size="medium"
-                  :aria-label="isDark ? '切换到浅色主题' : '切换到深色主题'"
-                  @click="toggleTheme"
-                >
+                <n-button circle quaternary size="medium" :aria-label="isDark ? '切换到浅色主题' : '切换到深色主题'"
+                  @click="toggleTheme">
                   <template #icon>
                     <n-icon :component="isDark ? SunIcon : MoonIcon" />
                   </template>
                 </n-button>
-                <n-button
-                  circle
-                  quaternary
-                  size="medium"
-                  aria-label="菜单"
-                  @click="showMobileMenu = true"
-                >
+                <n-button circle quaternary size="medium" aria-label="菜单" @click="showMobileMenu = true">
                   <template #icon>
                     <n-icon :component="BarsIcon" />
                   </template>
@@ -73,21 +55,12 @@
           </n-layout-header>
 
           <!-- 移动端菜单抽屉 -->
-          <n-drawer
-            v-model:show="showMobileMenu"
-            placement="right"
-            :width="280"
-          >
+          <n-drawer v-model:show="showMobileMenu" placement="right" :width="280">
             <n-drawer-content title="导航菜单" closable>
               <n-space vertical :size="8">
-                <n-button
-                  v-for="item in menuItems"
-                  :key="item.key"
-                  :type="activeKey === item.key ? 'primary' : 'default'"
-                  block
-                  size="large"
-                  @click="handleMobileNav(item.key)"
-                >
+                <n-button v-for="item in menuItems" :key="item.key"
+                  :type="activeKey === item.key ? 'primary' : 'default'" block size="large"
+                  @click="handleMobileNav(item.key)">
                   <template #icon>
                     <n-icon :component="item.icon" />
                   </template>
@@ -98,7 +71,7 @@
           </n-drawer>
 
           <!-- 主内容区 -->
-          <n-layout-content>
+          <n-layout-content id="main-content">
             <router-view v-slot="{ Component }">
               <transition name="page" mode="out-in">
                 <component :is="Component" />
@@ -188,11 +161,9 @@ onMounted(() => {
 /* 应用布局 */
 .app-layout {
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    var(--color-bg-secondary) 0%,
-    var(--color-bg-tertiary) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--color-bg-secondary) 0%,
+      var(--color-bg-tertiary) 100%);
 }
 
 /* 导航栏 */

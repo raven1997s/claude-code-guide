@@ -6,8 +6,8 @@
         <header class="search-header">
           <h1 class="page-title">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
             命令搜索
           </h1>
@@ -17,38 +17,25 @@
         <!-- 搜索输入 -->
         <div class="search-input-wrapper">
           <div class="search-input-container">
-            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="搜索命令或中文描述..."
-              class="search-input"
-              autocomplete="off"
-              @input="handleSearch"
-            >
-            <button
-              v-if="searchQuery"
-              class="clear-btn"
-              @click="clearSearch"
-            >
+            <input v-model="searchQuery" type="text" placeholder="搜索命令或中文描述..." class="search-input" autocomplete="off"
+              @input="handleSearch">
+            <button v-if="searchQuery" class="clear-btn" @click="clearSearch">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18"/>
-                <line x1="6" y1="6" x2="18" y2="18"/>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
           </div>
 
           <!-- 搜索模式切换 -->
           <div class="mode-tabs">
-            <button
-              v-for="mode in searchModes"
-              :key="mode.value"
-              :class="['mode-tab', { 'is-active': searchMode === mode.value }]"
-              @click="searchMode = mode.value"
-            >
+            <button v-for="mode in searchModes" :key="mode.value"
+              :class="['mode-tab', { 'is-active': searchMode === mode.value }]" @click="searchMode = mode.value">
               {{ mode.label }}
             </button>
           </div>
@@ -60,17 +47,13 @@
           <div class="popular-section">
             <div class="section-header-inline">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="section-icon">
-                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3.5 3 4 6 .5-2.5 1.5-4 3.5-4 .5.5 1 1.5 1 2.5a2.5 2.5 0 0 0 5 0c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5-2.5 2-4.9 4-6.5 2-1.6 3.5-3 4-6 .5 2.5 1.5 4 3.5 4 .5-.5 1-1.5 1-2.5z"/>
+                <path
+                  d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3.5 3 4 6 .5-2.5 1.5-4 3.5-4 .5.5 1 1.5 1 2.5a2.5 2.5 0 0 0 5 0c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5-2.5 2-4.9 4-6.5 2-1.6 3.5-3 4-6 .5 2.5 1.5 4 3.5 4 .5-.5 1-1.5 1-2.5z" />
               </svg>
               <span class="section-title">热门搜索</span>
             </div>
             <div class="tag-cloud">
-              <button
-                v-for="item in popularSearches"
-                :key="item"
-                class="search-tag"
-                @click="searchFor(item)"
-              >
+              <button v-for="item in popularSearches" :key="item" class="search-tag" @click="searchFor(item)">
                 {{ item }}
               </button>
             </div>
@@ -79,20 +62,16 @@
           <!-- 搜索历史 -->
           <div v-if="searchHistory.length > 0" class="history-section">
             <div class="section-header-inline">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="section-icon">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                class="section-icon">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
               </svg>
               <span class="section-title">搜索历史</span>
               <button class="clear-history" @click="clearHistory">清空</button>
             </div>
             <div class="tag-cloud">
-              <button
-                v-for="item in searchHistory"
-                :key="item"
-                class="search-tag has-close"
-                @click="searchFor(item)"
-              >
+              <button v-for="item in searchHistory" :key="item" class="search-tag has-close" @click="searchFor(item)">
                 {{ item }}
                 <span class="close-icon" @click.stop="removeFromHistory(item)">×</span>
               </button>
@@ -102,9 +81,9 @@
           <!-- 搜索提示 -->
           <div class="search-tips">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="16" x2="12" y2="12"/>
-              <line x1="12" y1="8" x2="12.01" y2="8"/>
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
             </svg>
             <span>支持模糊搜索，可以输入命令的一部分或中文描述</span>
           </div>
@@ -127,12 +106,8 @@
           <p class="no-results-desc">尝试使用不同的关键词搜索</p>
           <div v-if="searchSuggestions.length > 0" class="suggestions">
             <span class="suggestions-label">建议搜索：</span>
-            <button
-              v-for="suggestion in searchSuggestions"
-              :key="suggestion"
-              class="suggestion-tag"
-              @click="searchFor(suggestion)"
-            >
+            <button v-for="suggestion in searchSuggestions" :key="suggestion" class="suggestion-tag"
+              @click="searchFor(suggestion)">
               {{ suggestion }}
             </button>
           </div>
@@ -140,24 +115,16 @@
 
         <!-- 结果列表 -->
         <div v-else class="results-list">
-          <div
-            v-for="category in resultCategories"
-            :key="category.name"
-            class="result-category"
-          >
+          <div v-for="category in resultCategories" :key="category.name" class="result-category">
             <div class="category-header-inline">
               <span class="category-emoji">{{ category.icon }}</span>
               <span class="category-name">{{ category.label }}</span>
               <span class="category-count">{{ category.items.length }}</span>
             </div>
             <div class="result-grid">
-              <div
-                v-for="(item, itemIndex) in category.items"
-                :key="item.command || item.key"
-                class="result-card stagger-item animate-fade-in-up"
-                :style="{ animationDelay: `${itemIndex * 50}ms` }"
-                @click="showDetail(item)"
-              >
+              <div v-for="(item, itemIndex) in category.items" :key="item.command || item.key"
+                class="result-card stagger-item animate-fade-in-up hover-lift"
+                :style="{ animationDelay: `${itemIndex * 50}ms` }" @click="showDetail(item)">
                 <code class="result-command" v-html="highlightText(item.command || item.key)"></code>
                 <p class="result-desc" v-html="highlightText(item.fullDesc || item.desc)"></p>
                 <div v-if="item.example" class="result-example">
@@ -176,8 +143,8 @@
         <div class="modal-content" @click.stop>
           <button class="modal-close" @click="closeModal">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
 
@@ -442,11 +409,9 @@ onMounted(() => {
 <style scoped>
 .search-view {
   min-height: 100vh;
-  background: linear-gradient(
-    180deg,
-    var(--color-bg-secondary) 0%,
-    var(--color-bg-tertiary) 100%
-  );
+  background: linear-gradient(180deg,
+      var(--color-bg-secondary) 0%,
+      var(--color-bg-tertiary) 100%);
 }
 
 .page-container {

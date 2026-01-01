@@ -14,17 +14,10 @@
 
       <!-- 手风琴折叠面板 -->
       <div class="commands-container">
-        <div
-          v-for="category in commandCategories"
-          :key="category.name"
-          class="category-block"
-          :class="{ 'is-collapsed': collapsedCategories.has(category.name) }"
-        >
+        <div v-for="category in commandCategories" :key="category.name" class="category-block"
+          :class="{ 'is-collapsed': collapsedCategories.has(category.name) }">
           <!-- 分类头部 -->
-          <button
-            class="category-trigger"
-            @click="toggleCategory(category.name)"
-          >
+          <button class="category-trigger" @click="toggleCategory(category.name)">
             <span class="category-info">
               <span class="category-emoji">{{ category.icon }}</span>
               <span class="category-name">{{ category.label }}</span>
@@ -32,7 +25,7 @@
             </span>
             <span class="collapse-icon" :class="{ 'is-rotated': !collapsedCategories.has(category.name) }">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 11L3 6h10l-5 5z"/>
+                <path d="M8 11L3 6h10l-5 5z" />
               </svg>
             </span>
           </button>
@@ -40,29 +33,24 @@
           <!-- 命令列表 -->
           <div class="category-commands" v-show="!collapsedCategories.has(category.name)">
             <div class="commands-grid">
-              <div
-                v-for="(cmd, cmdIndex) in getCommandsByCategory(category.name)"
-                :key="cmd.command"
-                class="command-card stagger-item animate-fade-in-up"
-                :style="{ animationDelay: `${cmdIndex * 30}ms` }"
-                @click="showDetail(cmd)"
-              >
+              <div v-for="(cmd, cmdIndex) in getCommandsByCategory(category.name)" :key="cmd.command"
+                class="command-card stagger-item animate-fade-in-up hover-lift"
+                :style="{ animationDelay: `${cmdIndex * 30}ms` }" @click="showDetail(cmd)">
                 <div class="card-main">
                   <code class="command-name">{{ cmd.command }}</code>
                   <div class="card-actions">
-                        <button
-                          class="action-btn"
-                          @click.stop="copyCommand(cmd.command, $event)"
-                          :class="{ 'is-copied': copiedCommands[cmd.command] }"
-                        >
-                          <svg v-if="!copiedCommands[cmd.command]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                          </svg>
-                          <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"/>
-                          </svg>
-                        </button>
+                    <button class="action-btn" @click.stop="copyCommand(cmd.command, $event)"
+                      :class="{ 'is-copied': copiedCommands[cmd.command] }">
+                      <svg v-if="!copiedCommands[cmd.command]" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                      </svg>
+                      <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
                 <p class="command-description">{{ cmd.fullDesc || cmd.desc }}</p>
@@ -83,8 +71,8 @@
         <div class="modal-content" @click.stop>
           <button class="modal-close" @click="closeModal">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
 
@@ -114,8 +102,8 @@
                 <h4 class="section-title">使用示例</h4>
                 <button class="copy-btn" @click="copyExample" :class="{ 'is-copied': copied }">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                   </svg>
                   {{ copied ? '已复制' : '复制' }}
                 </button>
@@ -140,7 +128,7 @@
     <Transition name="toast">
       <div v-if="showToast" class="toast">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="20 6 9 17 4 12"/>
+          <polyline points="20 6 9 17 4 12" />
         </svg>
         <span>已复制到剪贴板</span>
       </div>
@@ -252,11 +240,9 @@ function copyExample() {
 <style scoped>
 .cheatsheet-view {
   min-height: 100vh;
-  background: linear-gradient(
-    180deg,
-    var(--color-bg-secondary) 0%,
-    var(--color-bg-tertiary) 100%
-  );
+  background: linear-gradient(180deg,
+      var(--color-bg-secondary) 0%,
+      var(--color-bg-tertiary) 100%);
 }
 
 /* 页面容器 */
