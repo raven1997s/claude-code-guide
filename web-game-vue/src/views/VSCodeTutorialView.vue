@@ -2,13 +2,13 @@
   <div class="vscode-tutorial-view">
     <!-- 顶部导航 -->
     <div class="tutorial-header">
-      <n-button text @click="goBack" style="color: #6b7280;">
+      <n-button text @click="goBack" :style="{ color: 'var(--color-text-secondary)' }">
         <template #icon>
           <n-icon :component="ArrowLeftIcon" />
         </template>
         返回首页
       </n-button>
-      <n-h2 style="margin: 0; color: #1a1a2e;">Claude Code VS Code 插件教程</n-h2>
+      <n-h2 style="margin: 0;">Claude Code VS Code 插件教程</n-h2>
       <div class="progress-badge">
         步骤 {{ currentStep + 1 }} / {{ totalSteps }}
       </div>
@@ -393,8 +393,8 @@ function handleSendMessage(content) {
         timestamp: Date.now(),
         diff: {
           file: 'App.vue',
-          original: '<script setup>\nconst props = defineProps(["title", "count"])</script>',
-          modified: '<script setup lang="ts">\ninterface Props {\n  title: string\n  count: number\n}\n\nconst props = defineProps<Props>()</script>'
+          original: '// 原代码\nconst props = defineProps(["title", "count"])',
+          modified: '// TypeScript 重构后\ninterface Props {\n  title: string\n  count: number\n}\nconst props = defineProps<Props>()'
         }
       }
     } else if (content.includes('性能') || content.includes('优化函数')) {
@@ -498,7 +498,11 @@ function goBack() {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-tertiary) 100%
+  );
 }
 
 /* 顶部导航 */
@@ -507,10 +511,10 @@ function goBack() {
   align-items: center;
   justify-content: space-between;
   padding: 20px 32px;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--color-bg-elevated);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-xs);
 }
 
 .progress-badge {
@@ -549,7 +553,7 @@ function goBack() {
 .guide-header h3 {
   margin: 0;
   font-size: 18px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .guide-body {
@@ -559,7 +563,7 @@ function goBack() {
 .guide-description {
   font-size: 15px;
   line-height: 1.7;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin-bottom: 16px;
 }
 
@@ -571,7 +575,7 @@ function goBack() {
 .guide-details li {
   font-size: 14px;
   line-height: 1.8;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 8px 0;
 }
 
@@ -581,10 +585,10 @@ function goBack() {
   gap: 12px;
   padding: 12px;
   margin-top: 16px;
-  background: rgba(251, 191, 36, 0.08);
-  border: 1px solid rgba(251, 191, 36, 0.2);
+  background: var(--color-warning-light);
+  border: 1px solid var(--color-warning);
   border-radius: 8px;
-  color: #d97706;
+  color: var(--color-warning);
   font-size: 14px;
 }
 
@@ -617,7 +621,7 @@ function goBack() {
 
 .step-item.active {
   background: rgba(99, 102, 241, 0.1);
-  border-left: 3px solid #6366f1;
+  border-left: 3px solid var(--color-primary-500);
 }
 
 .step-item.completed {
@@ -628,23 +632,23 @@ function goBack() {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
 .step-item.active .step-number {
-  background: #6366f1;
+  background: var(--color-primary-500);
   color: #fff;
 }
 
 .step-item.completed .step-number {
-  background: #10b981;
+  background: var(--color-success);
   color: #fff;
 }
 
@@ -655,12 +659,12 @@ function goBack() {
 .step-title {
   font-size: 14px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .step-desc {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin-top: 2px;
 }
 
@@ -669,12 +673,12 @@ function goBack() {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border-radius: 12px;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
   padding: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--color-border-default);
 }
 
 @media (max-width: 1024px) {

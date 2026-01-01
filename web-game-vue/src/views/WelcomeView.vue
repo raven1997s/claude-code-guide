@@ -272,7 +272,11 @@ function goToCLI() {
   margin: 0 auto;
   padding: 48px 24px 80px;
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-tertiary) 100%
+  );
 }
 
 /* Hero Section */
@@ -282,10 +286,10 @@ function goToCLI() {
   padding: 80px 40px 60px;
   border-radius: 16px;
   margin-bottom: 56px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-md);
 }
 
 .hero-content {
@@ -342,13 +346,13 @@ function goToCLI() {
   font-size: 16px;
   margin-bottom: 15px;
   opacity: 0.7;
-  color: #6b7280;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
 }
 
 .hero-subtitle p {
   font-size: 18px;
-  color: #4b5563;
+  color: var(--color-text-secondary);
   margin: 0;
   max-width: 600px;
   margin-left: auto;
@@ -357,7 +361,7 @@ function goToCLI() {
 }
 
 .cyber-mono {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  font-family: var(--font-mono);
 }
 
 /* Hero Stats */
@@ -382,9 +386,9 @@ function goToCLI() {
 }
 
 .stat-label {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }
 
 /* Section Title */
@@ -396,18 +400,18 @@ function goToCLI() {
   align-items: center;
   justify-content: center;
   gap: 15px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
 .section-title .cyber-prompt {
   font-size: 42px;
   font-weight: 300;
-  color: #6366f1;
+  color: var(--color-primary-500);
 }
 
 .cyber-glow {
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .cyber-heading {
@@ -434,11 +438,11 @@ function goToCLI() {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: 16px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-xs);
 }
 
 .path-card:hover {
@@ -477,11 +481,11 @@ function goToCLI() {
 .card-header h3 {
   margin: 0 0 8px 0;
   font-size: 22px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .card-content p {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin-bottom: 20px;
   font-size: 14px;
 }
@@ -497,23 +501,23 @@ function goToCLI() {
   align-items: center;
   gap: 12px;
   padding: 10px 0;
-  color: #374151;
+  color: var(--color-text-secondary);
   font-size: 15px;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  font-family: var(--font-mono);
 }
 
 .card-meta {
   display: flex;
   gap: 28px;
   padding-top: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid var(--color-border-default);
 }
 
 .meta-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-size: 14px;
 }
 
@@ -530,10 +534,10 @@ function goToCLI() {
 
 .quick-start .cyber-card {
   padding: 32px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-xs);
 }
 
 .quick-start-header {
@@ -546,7 +550,7 @@ function goToCLI() {
 .quick-start-header h3 {
   margin: 0;
   font-size: 24px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .steps-container {
@@ -572,13 +576,13 @@ function goToCLI() {
 .step-content h4 {
   margin: 0 0 8px 0;
   font-size: 16px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .step-content p {
   margin: 0;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   line-height: 1.6;
 }
 

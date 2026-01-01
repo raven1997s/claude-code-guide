@@ -101,7 +101,11 @@ import { SEARCH_DATABASE } from '@/data/search-data'
 .reference-view {
   position: relative;
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-tertiary) 100%
+  );
 }
 
 .content-wrapper {
@@ -123,7 +127,7 @@ import { SEARCH_DATABASE } from '@/data/search-data'
 .doc-header :deep(.n-h1) {
   font-size: 36px;
   font-weight: 800;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   margin: 0;
   display: flex;
   align-items: center;
@@ -131,7 +135,7 @@ import { SEARCH_DATABASE } from '@/data/search-data'
 }
 
 .doc-header :deep(.n-icon) {
-  color: #6366f1;
+  color: var(--color-primary-500);
 }
 
 .cyber-heading {
@@ -139,14 +143,14 @@ import { SEARCH_DATABASE } from '@/data/search-data'
 }
 
 .cyber-prompt {
-  color: #6366f1;
+  color: var(--color-primary-500);
 }
 
 .header-desc {
   display: block;
   text-align: center;
   margin-bottom: 40px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }
 
 .doc-content {
@@ -156,83 +160,83 @@ import { SEARCH_DATABASE } from '@/data/search-data'
 }
 
 :deep(.n-card) {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-xs);
 }
 
 :deep(.n-card:hover) {
   border-color: rgba(99, 102, 241, 0.15);
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 :deep(.n-card__header) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 :deep(.n-card__header span) {
-  color: #1a1a2e !important;
+  color: var(--color-text-primary) !important;
   font-weight: 700;
 }
 
 .code-block {
   background: rgba(99, 102, 241, 0.08);
-  color: #6366f1;
+  color: var(--color-primary-500);
   padding: 16px 20px;
   border-radius: 8px;
   font-size: 15px;
   display: block;
   border: 1px solid rgba(99, 102, 241, 0.15);
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  font-family: var(--font-mono);
 }
 
 .cyber-mono {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  font-family: var(--font-mono);
 }
 
 .cyber-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
 }
 
 /* 描述列表样式 */
 :deep(.n-descriptions) {
-  --n-td-text-color: #4b5563;
-  --n-th-text-color: #1a1a2e;
-  --n-border-color: rgba(0, 0, 0, 0.06);
+  --n-td-text-color: var(--color-text-secondary);
+  --n-th-text-color: var(--color-text-primary);
+  --n-border-color: var(--color-border-default);
 }
 
 :deep(.n-descriptions-table-content__label) {
   background: rgba(99, 102, 241, 0.06);
-  color: #1a1a2e !important;
+  color: var(--color-text-primary) !important;
   font-weight: 600;
 }
 
 :deep(.n-descriptions-table-content__content) {
-  color: #4b5563 !important;
+  color: var(--color-text-secondary) !important;
 }
 
 /* 列表样式 */
 :deep(.n-list) {
-  --n-text-color: #4b5563;
+  --n-text-color: var(--color-text-secondary);
 }
 
 :deep(.n-list-item) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 :deep(.n-thing) {
-  --n-title-text-color: #1a1a2e;
-  --n-description-text-color: #4b5563;
+  --n-title-text-color: var(--color-text-primary);
+  --n-description-text-color: var(--color-text-secondary);
 }
 
 :deep(.n-thing-main__title) {
-  color: #1a1a2e !important;
+  color: var(--color-text-primary) !important;
   font-weight: 600;
 }
 
 :deep(.n-thing-main__description) {
-  color: #4b5563 !important;
+  color: var(--color-text-secondary) !important;
 }
 </style>

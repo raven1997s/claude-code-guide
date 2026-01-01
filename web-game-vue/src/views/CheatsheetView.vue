@@ -41,9 +41,10 @@
           <div class="category-commands" v-show="!collapsedCategories.has(category.name)">
             <div class="commands-grid">
               <div
-                v-for="cmd in getCommandsByCategory(category.name)"
+                v-for="(cmd, cmdIndex) in getCommandsByCategory(category.name)"
                 :key="cmd.command"
-                class="command-card"
+                class="command-card stagger-item animate-fade-in-up"
+                :style="{ animationDelay: `${cmdIndex * 30}ms` }"
                 @click="showDetail(cmd)"
               >
                 <div class="card-main">
@@ -251,7 +252,11 @@ function copyExample() {
 <style scoped>
 .cheatsheet-view {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-tertiary) 100%
+  );
 }
 
 /* 页面容器 */
@@ -270,14 +275,14 @@ function copyExample() {
 .page-title {
   font-size: 32px;
   font-weight: 600;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   margin: 0 0 12px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   letter-spacing: -0.02em;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-family: var(--font-sans);
 }
 
 .title-icon {
@@ -291,7 +296,7 @@ function copyExample() {
 
 .page-subtitle {
   font-size: 15px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0;
   font-weight: 400;
 }
@@ -305,17 +310,17 @@ function copyExample() {
 
 /* 分类块 */
 .category-block {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
   overflow: hidden;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-xs);
 }
 
 .category-block:hover {
   border-color: rgba(99, 102, 241, 0.15);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+  box-shadow: var(--shadow-sm);
 }
 
 /* 分类触发器 */
@@ -348,19 +353,19 @@ function copyExample() {
 .category-name {
   font-size: 15px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .category-count {
   font-size: 12px;
-  color: #6b7280;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-tertiary);
   padding: 2px 8px;
   border-radius: 12px;
 }
 
 .collapse-icon {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   transition: transform 0.2s ease;
 }
 
@@ -382,18 +387,18 @@ function copyExample() {
 /* 命令卡片 */
 .command-card {
   padding: 14px 16px;
-  background: #f8f9fc;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .command-card:hover {
-  background: #ffffff;
+  background: var(--color-bg-elevated);
   border-color: rgba(99, 102, 241, 0.25);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .card-main {
@@ -427,7 +432,7 @@ function copyExample() {
   padding: 6px;
   background: transparent;
   border: none;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.15s ease;
@@ -437,17 +442,17 @@ function copyExample() {
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #e5e7eb;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 .action-btn.is-copied {
-  color: #10b981;
+  color: var(--color-success);
 }
 
 .command-description {
   font-size: 13px;
-  color: #4b5563;
+  color: var(--color-text-secondary);
   line-height: 1.6;
   margin: 0 0 10px 0;
 }
@@ -460,15 +465,15 @@ function copyExample() {
 
 .tag {
   font-size: 11px;
-  color: #6b7280;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-tertiary);
   padding: 3px 8px;
   border-radius: 4px;
 }
 
 .tag-warn {
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.1);
+  color: var(--color-warning);
+  background: var(--color-warning-light);
 }
 
 /* 弹窗 */
@@ -489,10 +494,10 @@ function copyExample() {
   max-width: 580px;
   max-height: 85vh;
   overflow-y: auto;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
   position: relative;
 }
 
@@ -505,22 +510,22 @@ function copyExample() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--color-bg-tertiary);
   border: none;
   border-radius: 8px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .modal-close:hover {
-  background: rgba(0, 0, 0, 0.08);
-  color: #1a1a2e;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
 }
 
 .modal-header {
   padding: 24px 24px 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 .modal-meta {
@@ -543,8 +548,8 @@ function copyExample() {
 .modal-command {
   font-size: 18px;
   font-weight: 600;
-  color: #1a1a2e;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
 }
 
 .modal-tags {
@@ -559,7 +564,7 @@ function copyExample() {
 
 .modal-description {
   font-size: 15px;
-  color: #374151;
+  color: var(--color-text-secondary);
   line-height: 1.7;
   margin: 0 0 24px 0;
 }
@@ -575,7 +580,7 @@ function copyExample() {
 .section-title {
   font-size: 13px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   margin: 0 0 12px 0;
 }
 
@@ -591,23 +596,23 @@ function copyExample() {
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-default);
   border-radius: 6px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-size: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .copy-btn:hover {
-  background: rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #1a1a2e;
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
 }
 
 .copy-btn.is-copied {
-  color: #10b981;
+  color: var(--color-success);
   border-color: rgba(16, 185, 129, 0.2);
   background: rgba(16, 185, 129, 0.08);
 }
@@ -620,7 +625,7 @@ function copyExample() {
 
 .detail-list li {
   font-size: 14px;
-  color: #4b5563;
+  color: var(--color-text-secondary);
   line-height: 1.8;
   margin-bottom: 6px;
   position: relative;
@@ -630,18 +635,18 @@ function copyExample() {
   content: '•';
   position: absolute;
   left: -16px;
-  color: #9ca3af;
+  color: var(--color-text-tertiary);
 }
 
 .example-code {
   margin: 0;
   padding: 16px;
-  background: #f8f9fc;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
   border-radius: 8px;
   font-size: 13px;
-  color: #374151;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
   line-height: 1.6;
   overflow-x: auto;
 }
@@ -654,8 +659,8 @@ function copyExample() {
 
 .keyword-tag {
   font-size: 12px;
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
+  color: var(--color-success);
+  background: var(--color-success-light);
   padding: 5px 10px;
   border-radius: 6px;
 }
@@ -670,17 +675,17 @@ function copyExample() {
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background: #ffffff;
+  background: var(--color-bg-elevated);
   border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 10px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   font-size: 14px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   z-index: 1001;
 }
 
 .toast svg {
-  color: #10b981;
+  color: var(--color-success);
 }
 
 /* 过渡动画 */

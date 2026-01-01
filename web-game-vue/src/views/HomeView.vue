@@ -4,118 +4,104 @@
 
     <div class="content-wrapper">
       <n-space vertical :size="32" align="center">
-        <!-- Hero 区域 -->
-        <div class="hero">
-          <div class="ascii-logo cyber-mono cyber-fade-in">
-            <pre>
-   ▄████████ ███    █▄      ███      ▄██████▄
-  ███    ███ ███    ███ ▀█████████▄ ███    ███
-  ███    ███ ███    ███    ▀███▀▀██ ███    ███
-  ███    ███ ███    ███     ███   ▀ ███    ███
-▀███████████ ███    ███     ███     ▀██████▀
-            </pre>
+        <!-- Hero 区域 (Clean Minimal 风格) -->
+        <div class="hero-section">
+          <h1 class="hero-title">
+            Claude Code
+            <span class="gradient-text">CLI 学习指南</span>
+          </h1>
+          <p class="hero-subtitle">
+            通过互动游戏和实战教程，掌握 Claude Code 命令行工具
+          </p>
+          <div class="hero-actions">
+            <n-button type="primary" size="large" @click="navigateTo('/game')">
+              <template #icon>
+                <n-icon :component="GameIcon" />
+              </template>
+              开始学习
+            </n-button>
+            <n-button size="large" ghost @click="navigateTo('/reference')">
+              <template #icon>
+                <n-icon :component="BookIcon" />
+              </template>
+              查看文档
+            </n-button>
           </div>
-          <n-h1 class="cyber-heading">
-            <span class="cyber-text-cyan">CLAUDE</span>
-            <span class="cyber-text-pink">CODE</span>
-            <span class="cyber-text-green">LEARNING</span>
-          </n-h1>
-          <n-text depth="3" class="hero-subtitle">
-            在浏览器中学习 Claude Code CLI 命令，无需安装即可体验
-          </n-text>
-          <n-space :size="16" class="hero-actions">
-            <button class="cyber-btn" @click="navigateTo('/game')">
-              <n-icon :component="GameIcon" />
-              开始游戏学习
-            </button>
-            <button class="cyber-btn cyber-btn-secondary" @click="navigateTo('/reference')">
-              <n-icon :component="BookIcon" />
-              查看命令参考
-            </button>
-          </n-space>
         </div>
 
         <!-- 特性卡片 -->
         <div class="features-grid">
-          <div class="feature-card cyber-card cyber-fade-in cyber-stagger-1">
+          <div
+            v-for="(feature, index) in features"
+            :key="feature.title"
+            class="feature-card stagger-item animate-fade-in-up"
+            :style="{ animationDelay: `${index * 100}ms` }"
+          >
             <div class="feature-icon">
-              <n-icon size="36" :component="GameIcon" />
+              <n-icon size="32" :component="feature.icon" />
             </div>
-            <h3 class="cyber-heading">互动游戏</h3>
-            <p class="cyber-mono">
-              25+ 关卡精心设计，模拟终端实战学习
-            </p>
-          </div>
-          <div class="feature-card cyber-card cyber-fade-in cyber-stagger-2">
-            <div class="feature-icon">
-              <n-icon size="36" :component="BookIcon" />
-            </div>
-            <h3 class="cyber-heading">完整文档</h3>
-            <p class="cyber-mono">
-              CLI 参数、斜杠命令、模糊搜索全覆盖
-            </p>
-          </div>
-          <div class="feature-card cyber-card cyber-fade-in cyber-stagger-3">
-            <div class="feature-icon">
-              <n-icon size="36" :component="TerminalIcon" />
-            </div>
-            <h3 class="cyber-heading">无需安装</h3>
-            <p class="cyber-mono">
-              浏览器运行，随时学习，即刻上手
-            </p>
+            <h3 class="feature-title">{{ feature.title }}</h3>
+            <p class="feature-desc">{{ feature.desc }}</p>
           </div>
         </div>
 
-        <!-- 统计数据 -->
-        <n-card class="stats-card cyber-card">
-          <n-space :size="40" justify="center">
-            <div class="stat-item">
-              <div class="stat-value cyber-text-cyan">25+</div>
-              <div class="stat-label">互动关卡</div>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <div class="stat-value cyber-text-pink">80+</div>
-              <div class="stat-label">命令文档</div>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <div class="stat-value cyber-text-green">5</div>
-              <div class="stat-label">学习路径</div>
-            </div>
-          </n-space>
-        </n-card>
+        <!-- 统计卡片 -->
+        <div class="stats-section">
+          <div
+            v-for="(stat, index) in stats"
+            :key="stat.label"
+            class="stat-card animate-fade-in-up"
+            :class="`stat-${index}`"
+            :style="{ animationDelay: `${index * 100 + 300}ms` }"
+          >
+            <div class="stat-number animate-number-pop" :style="{ animationDelay: `${index * 100 + 500}ms` }">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
 
         <!-- 学习路径 -->
-        <div class="learning-path cyber-card">
-          <h2 class="cyber-heading" style="text-align: center; margin-bottom: 24px;">
-            <span class="cyber-prompt">></span>
-            学习路径
-          </h2>
-          <n-steps vertical :current="1" class="cyber-steps">
-            <n-step title="CLI 基础" description="学习基本的 CLI 命令和参数（关卡 1-10）" />
-            <n-step title="会话命令" description="掌握交互式会话中的斜杠命令（关卡 11-17）" />
-            <n-step title="综合应用" description="综合运用所学知识完成复杂任务（关卡 18-25）" />
-          </n-steps>
-        </div>
-
-        <!-- 热门搜索 -->
-        <n-card class="cyber-card">
+        <n-card class="learning-path-card">
           <template #header>
             <div class="card-header">
-              <n-icon :component="BoltIcon" class="cyber-text-green" />
-              <span class="cyber-heading">热门搜索</span>
+              <n-icon :component="RouteIcon" />
+              <span>学习路径</span>
+            </div>
+          </template>
+          <n-steps vertical :current="1" size="small">
+            <n-step title="CLI 基础">
+              <template #description>
+                学习基本的 CLI 命令和参数（关卡 1-10）
+              </template>
+            </n-step>
+            <n-step title="会话命令">
+              <template #description>
+                掌握交互式会话中的斜杠命令（关卡 11-17）
+              </template>
+            </n-step>
+            <n-step title="综合应用">
+              <template #description>
+                综合运用所学知识完成复杂任务（关卡 18-25）
+              </template>
+            </n-step>
+          </n-steps>
+        </n-card>
+
+        <!-- 热门搜索 -->
+        <n-card class="popular-search-card">
+          <template #header>
+            <div class="card-header">
+              <n-icon :component="BoltIcon" />
+              <span>热门搜索</span>
             </div>
           </template>
           <n-space>
             <n-tag
               v-for="item in popularSearches"
               :key="item.query"
-              checkable
               round
               size="medium"
-              @click="handlePopularSearch(item.query)"
               class="search-tag"
+              @click="handlePopularSearch(item.query)"
             >
               {{ item.query }}
             </n-tag>
@@ -128,26 +114,67 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { NCard, NSpace, NH1, NText, NIcon, NSteps, NStep, NTag } from 'naive-ui'
-import { Gamepad as GameIcon, Book as BookIcon, Terminal as TerminalIcon, Bolt as BoltIcon } from '@vicons/fa'
+import { NCard, NSpace, NButton, NIcon, NSteps, NStep, NTag } from 'naive-ui'
+import {
+  Gamepad as GameIcon,
+  Book as BookIcon,
+  Terminal as TerminalIcon,
+  Bolt as BoltIcon,
+  Route as RouteIcon
+} from '@vicons/fa'
 import PageBackground from '@/components/PageBackground.vue'
 
 const router = useRouter()
 
-const popularSearches = [
-  { query: 'help', desc: '查看帮助命令' },
-  { query: 'commit', desc: 'Git 提交代码' },
-  { query: 'claude -p', desc: '快速提问' },
-  { query: 'model', desc: '选择 AI 模型' },
-  { query: 'clear', desc: '清除对话' }
+/** 特性列表 */
+const features = [
+  {
+    title: '互动游戏',
+    desc: '25+ 关卡精心设计，模拟终端实战学习',
+    icon: GameIcon
+  },
+  {
+    title: '完整文档',
+    desc: 'CLI 参数、斜杠命令、模糊搜索全覆盖',
+    icon: BookIcon
+  },
+  {
+    title: '无需安装',
+    desc: '浏览器运行，随时学习，即刻上手',
+    icon: TerminalIcon
+  }
 ]
 
+/** 统计数据 */
+const stats = [
+  { value: '25+', label: '互动关卡' },
+  { value: '80+', label: '命令文档' },
+  { value: '5', label: '学习路径' }
+]
+
+/** 热门搜索 */
+const popularSearches = [
+  { query: 'help' },
+  { query: 'commit' },
+  { query: 'claude -p' },
+  { query: 'model' },
+  { query: 'clear' }
+]
+
+/**
+ * 导航到指定路由
+ * @param {string} path - 路由路径
+ */
 function navigateTo(path) {
   router.push(path)
 }
 
-function handlePopularSearch(query) {
-  router.push('/reference')
+/**
+ * 处理热门搜索点击
+ * @param {string} _query - 搜索关键词 (未使用，保留参数)
+ */
+function handlePopularSearch(_query) {
+  router.push('/search')
 }
 </script>
 
@@ -155,233 +182,259 @@ function handlePopularSearch(query) {
 .home-view {
   position: relative;
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-tertiary) 100%
+  );
 }
 
 .content-wrapper {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: var(--spacing-12) var(--spacing-6);
 }
 
-/* Hero */
-.hero {
+/* ========================================
+   Hero 区域 - Premium Experience
+   ======================================== */
+.hero-section {
   text-align: center;
-  padding: 60px 20px;
+  padding: var(--spacing-16) var(--spacing-6);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-primary-50) 50%,
+    var(--color-bg-secondary) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--spacing-8);
 }
 
-.ascii-logo {
-  margin-bottom: 24px;
-  opacity: 0.7;
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-.ascii-logo pre {
-  font-size: 10px;
-  line-height: 1.2;
-  color: #6366f1;
-  margin: 0;
+.hero-title {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-4) 0;
+  line-height: var(--leading-tight);
+  font-family: var(--font-sans);
 }
 
-.cyber-mono {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-}
-
-.hero :deep(.n-h1) {
-  font-size: 42px;
-  margin: 0 0 24px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  color: #1a1a2e;
-  font-weight: 700;
-}
-
-.cyber-text-cyan {
-  color: #6366f1;
-}
-
-.cyber-text-pink {
-  color: #ec4899;
-}
-
-.cyber-text-green {
-  color: #10b981;
-}
-
-.cyber-heading {
-  font-weight: 700;
+.gradient-text {
+  display: block;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-500),
+    var(--color-primary-700)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-subtitle {
-  display: block;
-  font-size: 18px;
-  margin-bottom: 32px;
-  color: #6b7280;
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-8) 0;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: var(--leading-relaxed);
 }
 
 .hero-actions {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
 }
 
-.hero-actions button {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.cyber-btn {
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.cyber-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
-}
-
-.cyber-btn-secondary {
-  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
-}
-
-.cyber-btn-secondary:hover {
-  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.3);
-}
-
-/* 特性卡片 */
+/* ========================================
+   特性卡片
+   ======================================== */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  gap: var(--spacing-6);
   width: 100%;
 }
 
 .feature-card {
-  padding: 32px;
+  padding: var(--spacing-8);
   text-align: center;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-slow) var(--ease-out);
+  transform-style: preserve-3d;
+  opacity: 0;
 }
 
 .feature-card:hover {
-  border-color: rgba(99, 102, 241, 0.15);
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.1);
-  transform: translateY(-2px);
+  border-color: var(--color-primary-300);
+  box-shadow: 0 16px 40px rgba(99, 102, 241, 0.2);
+  transform: perspective(1000px) rotateX(2deg) rotateY(2deg) translateY(-6px);
 }
 
 .feature-icon {
-  color: #6366f1;
-  margin-bottom: 16px;
-}
-
-.feature-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 20px;
-  color: #1a1a2e;
-}
-
-.feature-card p {
-  margin: 0;
-  color: #6b7280;
-  line-height: 1.6;
-}
-
-/* 统计卡片 */
-.stats-card {
-  width: 100%;
-  margin: 24px 0;
-  padding: 32px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.stat-item {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--spacing-4);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  background: var(--color-primary-50);
+  border-radius: var(--radius-md);
+  color: var(--color-primary-600);
 }
 
-.stat-value {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 36px;
-  font-weight: 800;
+.feature-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.feature-desc {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: var(--leading-relaxed);
+}
+
+/* ========================================
+   统计卡片 - 渐变风格
+   ======================================== */
+.stats-section {
+  display: flex;
+  gap: var(--spacing-6);
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 160px;
+  max-width: 200px;
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: #ffffff;
+}
+
+.stat-0 {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-500) 0%,
+    var(--color-primary-700) 100%
+  );
+}
+
+.stat-1 {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+}
+
+.stat-2 {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.stat-number {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--spacing-1);
 }
 
 .stat-label {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-  font-size: 14px;
-  color: #6b7280;
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  opacity: 0.9;
 }
 
-.stat-divider {
-  width: 1px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.08);
-}
-
-/* 学习路径 */
-.learning-path {
+/* ========================================
+   学习路径卡片
+   ======================================== */
+.learning-path-card {
   width: 100%;
-  padding: 32px;
-  margin: 24px 0;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.cyber-prompt {
-  color: #6366f1;
-  margin-right: 8px;
-}
-
-:deep(.cyber-steps) {
-  --n-text-color: #6b7280;
-}
-
-:deep(.n-steps) {
-  cursor: default;
-}
-
-/* 搜索标签 */
-.search-tag {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.search-tag:hover {
-  background: #6366f1 !important;
-  color: #ffffff !important;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--spacing-3);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
 }
 
-.cyber-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
+.card-header .n-icon {
+  color: var(--color-primary-500);
+}
+
+/* ========================================
+   热门搜索卡片
+   ======================================== */
+.popular-search-card {
+  width: 100%;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+}
+
+.search-tag {
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all var(--duration-base) var(--ease-out);
+}
+
+.search-tag:hover {
+  background: var(--color-primary-500) !important;
+  color: #ffffff !important;
+  border-color: var(--color-primary-500) !important;
+}
+
+/* ========================================
+   响应式
+   ======================================== */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: var(--spacing-8) var(--spacing-4);
+  }
+
+  .hero-section {
+    padding: var(--spacing-8) var(--spacing-4);
+  }
+
+  .hero-title {
+    font-size: var(--text-3xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-base);
+  }
+
+  .stats-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-card {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 </style>

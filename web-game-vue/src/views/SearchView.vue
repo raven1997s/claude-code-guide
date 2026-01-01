@@ -152,9 +152,10 @@
             </div>
             <div class="result-grid">
               <div
-                v-for="item in category.items"
+                v-for="(item, itemIndex) in category.items"
                 :key="item.command || item.key"
-                class="result-card"
+                class="result-card stagger-item animate-fade-in-up"
+                :style="{ animationDelay: `${itemIndex * 50}ms` }"
                 @click="showDetail(item)"
               >
                 <code class="result-command" v-html="highlightText(item.command || item.key)"></code>
@@ -441,7 +442,11 @@ onMounted(() => {
 <style scoped>
 .search-view {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-tertiary) 100%
+  );
 }
 
 .page-container {
@@ -463,23 +468,23 @@ onMounted(() => {
 .page-title {
   font-size: 32px;
   font-weight: 600;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   margin: 0 0 12px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   letter-spacing: -0.02em;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-family: var(--font-sans);
 }
 
 .page-title svg {
-  color: #6366f1;
+  color: var(--color-primary-500);
 }
 
 .page-subtitle {
   font-size: 15px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0;
   font-weight: 400;
 }
@@ -494,22 +499,22 @@ onMounted(() => {
   position: relative;
   display: flex;
   align-items: center;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: 12px;
   padding: 0 16px;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-xs);
 }
 
 .search-input-container:focus-within {
-  background: #ffffff;
+  background: var(--color-bg-elevated);
   border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08), var(--shadow-sm);
 }
 
 .search-icon {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
@@ -517,21 +522,21 @@ onMounted(() => {
   flex: 1;
   padding: 16px 12px;
   font-size: 16px;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   background: transparent;
   border: none;
   outline: none;
 }
 
 .search-input::placeholder {
-  color: #9ca3af;
+  color: var(--color-text-tertiary);
 }
 
 .clear-btn {
   padding: 6px;
   background: transparent;
   border: none;
-  color: #9ca3af;
+  color: var(--color-text-tertiary);
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.15s ease;
@@ -541,8 +546,8 @@ onMounted(() => {
 }
 
 .clear-btn:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: #6b7280;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
 }
 
 /* 模式切换 */
@@ -552,18 +557,18 @@ onMounted(() => {
   gap: 4px;
   margin-top: 16px;
   padding: 4px;
-  background: rgba(0, 0, 0, 0.03);
+  background: var(--color-bg-tertiary);
   border-radius: 10px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--color-border-default);
 }
 
 .mode-tab {
   padding: 8px 16px;
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   background: transparent;
   border: none;
   border-radius: 8px;
@@ -572,13 +577,13 @@ onMounted(() => {
 }
 
 .mode-tab:hover {
-  color: #4b5563;
+  color: var(--color-text-primary);
 }
 
 .mode-tab.is-active {
-  color: #1a1a2e;
-  background: #ffffff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  color: var(--color-text-primary);
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-xs);
 }
 
 /* 空状态 */
@@ -597,21 +602,21 @@ onMounted(() => {
 }
 
 .section-icon {
-  color: #6366f1;
+  color: var(--color-primary-500);
   flex-shrink: 0;
 }
 
 .section-title {
   font-size: 14px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .clear-history {
   margin-left: auto;
   padding: 4px 10px;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   background: transparent;
   border: none;
   border-radius: 6px;
@@ -620,8 +625,8 @@ onMounted(() => {
 }
 
 .clear-history:hover {
-  color: #1a1a2e;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-primary);
+  background: var(--color-bg-tertiary);
 }
 
 .tag-cloud {
@@ -633,9 +638,9 @@ onMounted(() => {
 .search-tag {
   padding: 8px 14px;
   font-size: 13px;
-  color: #4b5563;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -644,9 +649,9 @@ onMounted(() => {
 .search-tag:hover {
   background: rgba(99, 102, 241, 0.06);
   border-color: rgba(99, 102, 241, 0.2);
-  color: #6366f1;
+  color: var(--color-primary-500);
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-xs);
 }
 
 .search-tag.has-close {
@@ -661,12 +666,12 @@ onMounted(() => {
   transform: translateY(-50%);
   font-size: 16px;
   line-height: 1;
-  color: #9ca3af;
+  color: var(--color-text-tertiary);
   transition: color 0.15s ease;
 }
 
 .search-tag:hover .close-icon {
-  color: #6366f1;
+  color: var(--color-primary-500);
 }
 
 .search-tips {
@@ -679,11 +684,11 @@ onMounted(() => {
   border: 1px solid rgba(99, 102, 241, 0.1);
   border-radius: 10px;
   font-size: 13px;
-  color: #4b5563;
+  color: var(--color-text-secondary);
 }
 
 .search-tips svg {
-  color: #6366f1;
+  color: var(--color-primary-500);
   flex-shrink: 0;
 }
 
@@ -728,13 +733,13 @@ onMounted(() => {
 .no-results-title {
   font-size: 18px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   margin: 0 0 8px 0;
 }
 
 .no-results-desc {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0 0 24px 0;
 }
 
@@ -748,15 +753,15 @@ onMounted(() => {
 
 .suggestions-label {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }
 
 .suggestion-tag {
   padding: 6px 12px;
   font-size: 12px;
-  color: #4b5563;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -765,7 +770,7 @@ onMounted(() => {
 .suggestion-tag:hover {
   background: rgba(99, 102, 241, 0.06);
   border-color: rgba(99, 102, 241, 0.2);
-  color: #6366f1;
+  color: var(--color-primary-500);
 }
 
 /* 结果列表 */
@@ -796,14 +801,14 @@ onMounted(() => {
 .category-name {
   font-size: 15px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
 }
 
 .category-count {
   margin-left: auto;
   font-size: 12px;
-  color: #6b7280;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-tertiary);
   padding: 2px 8px;
   border-radius: 12px;
 }
@@ -816,27 +821,27 @@ onMounted(() => {
 
 .result-card {
   padding: 16px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-xs);
 }
 
 .result-card:hover {
-  background: #fafbff;
+  background: var(--color-bg-secondary);
   border-color: rgba(99, 102, 241, 0.2);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .result-command {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: #6366f1;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: var(--color-primary-500);
+  font-family: var(--font-mono);
   background: rgba(99, 102, 241, 0.1);
   padding: 4px 10px;
   border-radius: 6px;
@@ -845,7 +850,7 @@ onMounted(() => {
 
 .result-desc {
   font-size: 13px;
-  color: #4b5563;
+  color: var(--color-text-secondary);
   line-height: 1.6;
   margin: 0 0 10px 0;
 }
@@ -853,17 +858,17 @@ onMounted(() => {
 .result-example {
   margin-top: 10px;
   padding: 10px;
-  background: #f8f9fc;
+  background: var(--color-bg-secondary);
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--color-border-subtle);
 }
 
 .result-example code {
   display: block;
   font-size: 11px;
-  color: #6b7280;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -872,7 +877,7 @@ onMounted(() => {
 /* 高亮 */
 :deep(mark) {
   background: rgba(99, 102, 241, 0.2);
-  color: #4f46e5;
+  color: var(--color-primary-600);
   padding: 0 2px;
   border-radius: 2px;
 }
@@ -895,10 +900,10 @@ onMounted(() => {
   max-width: 580px;
   max-height: 85vh;
   overflow-y: auto;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
   position: relative;
 }
 
@@ -911,22 +916,22 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--color-bg-tertiary);
   border: none;
   border-radius: 8px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .modal-close:hover {
-  background: rgba(0, 0, 0, 0.08);
-  color: #1a1a2e;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
 }
 
 .modal-header {
   padding: 24px 24px 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 .modal-meta {
@@ -949,8 +954,8 @@ onMounted(() => {
 .modal-command {
   font-size: 18px;
   font-weight: 600;
-  color: #1a1a2e;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
 }
 
 .modal-tags {
@@ -961,15 +966,15 @@ onMounted(() => {
 
 .tag {
   font-size: 11px;
-  color: #6b7280;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-tertiary);
   padding: 3px 8px;
   border-radius: 4px;
 }
 
 .tag-warn {
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.1);
+  color: var(--color-warning);
+  background: var(--color-warning-light);
 }
 
 .modal-body {
@@ -978,7 +983,7 @@ onMounted(() => {
 
 .modal-description {
   font-size: 15px;
-  color: #374151;
+  color: var(--color-text-secondary);
   line-height: 1.7;
   margin: 0 0 24px 0;
 }
@@ -994,7 +999,7 @@ onMounted(() => {
 .section-title {
   font-size: 13px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-primary);
   margin: 0 0 12px 0;
 }
 
@@ -1006,7 +1011,7 @@ onMounted(() => {
 
 .detail-list li {
   font-size: 14px;
-  color: #4b5563;
+  color: var(--color-text-secondary);
   line-height: 1.8;
   margin-bottom: 6px;
   position: relative;
@@ -1016,18 +1021,18 @@ onMounted(() => {
   content: '•';
   position: absolute;
   left: -16px;
-  color: #9ca3af;
+  color: var(--color-text-tertiary);
 }
 
 .example-code {
   margin: 0;
   padding: 16px;
-  background: #f8f9fc;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
   border-radius: 8px;
   font-size: 13px;
-  color: #374151;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
   line-height: 1.6;
   overflow-x: auto;
 }

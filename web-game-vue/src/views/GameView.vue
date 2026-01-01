@@ -401,9 +401,13 @@ function goHome() {
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: var(--spacing-8) var(--spacing-6);
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fc 0%, #f0f2f5 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-tertiary) 100%
+  );
 }
 
 .game-content {
@@ -413,28 +417,45 @@ function goHome() {
 
 .game-header {
   text-align: center;
-  padding: 20px;
+  padding: var(--spacing-5);
+}
+
+.game-header :deep(.n-h1) {
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+}
+
+.game-header :deep(.n-h1 .n-icon) {
+  color: var(--color-primary-500);
 }
 
 .level-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  gap: var(--spacing-4);
 }
 
 /* 浮动分享按钮 */
 .share-fab {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
-  z-index: 100;
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  bottom: var(--spacing-8);
+  right: var(--spacing-8);
+  z-index: var(--z-fixed);
+  box-shadow: var(--shadow-primary);
   animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .share-fab:hover {
@@ -442,56 +463,62 @@ function goHome() {
   transform: scale(1.1);
 }
 
-/* Modal 样式覆盖 */
+/* 卡片样式覆盖 */
 :deep(.n-card) {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Tabs 样式 */
+:deep(.n-tabs .n-tabs-tab) {
+  transition: all var(--duration-base) var(--ease-out);
 }
 
 /* 完成卡片样式 */
 .completion-card {
-  animation: slideIn 0.3s ease-out;
+  animation: slideIn var(--duration-slow) var(--ease-out);
 }
 
 .completion-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 20px;
-  font-weight: 700;
-  color: #1a1a2e;
+  gap: var(--spacing-3);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
 }
 
 .completion-icon {
   font-size: 28px;
-  animation: bounce 0.5s ease-out;
+  animation: bounce 0.5s var(--ease-out);
 }
 
 .completion-title {
-  color: #10b981;
+  color: var(--color-success);
 }
 
 .completion-content {
   text-align: center;
-  padding: 12px 0;
+  padding: var(--spacing-3) 0;
 }
 
 .completion-message {
-  font-size: 16px;
-  color: #1a1a2e;
-  margin: 0 0 12px 0;
-  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-3) 0;
+  font-weight: var(--font-weight-semibold);
 }
 
 .completion-badge {
-  font-size: 14px;
+  font-size: var(--text-sm);
   color: #ec4899;
   margin: 0;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-  padding: 8px 16px;
+  font-family: var(--font-mono);
+  padding: var(--spacing-2) var(--spacing-4);
   background: rgba(236, 72, 153, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   display: inline-block;
 }
 
@@ -507,7 +534,29 @@ function goHome() {
 }
 
 @keyframes bounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .game-view {
+    padding: var(--spacing-4) var(--spacing-4);
+  }
+
+  .level-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  .share-fab {
+    bottom: var(--spacing-4);
+    right: var(--spacing-4);
+  }
 }
 </style>

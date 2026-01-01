@@ -47,7 +47,9 @@ export default [
       globals: {
         process: 'readonly',
         console: 'readonly',
-        localStorage: 'readonly'
+        localStorage: 'readonly',
+        window: 'readonly',
+        document: 'readonly'
       }
     },
     rules: {

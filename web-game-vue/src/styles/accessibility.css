@@ -1,0 +1,232 @@
+/**
+ * 可访问性样式 (Accessibility)
+ * 增强键盘导航、焦点管理、屏幕阅读器支持
+ *
+ * @module accessibility
+ * @description WCAG 2.1 AA 级别合规样式
+ */
+
+/* ========================================
+   1. 焦点样式 (Focus Styles)
+   ======================================== */
+
+/* 默认焦点样式 - 用于键盘导航 */
+:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* 移除鼠标点击时的焦点样式 */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* 按钮焦点样式增强 */
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--color-primary-100);
+}
+
+/* 输入框焦点样式 */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+/* 卡片焦点样式 */
+.card:focus-visible,
+[role="listitem"]:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   2. 跳过链接 (Skip Links)
+   ======================================== */
+
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--color-primary-500);
+    color: #ffffff;
+    padding: var(--spacing-3) var(--spacing-6);
+    z-index: var(--z-tooltip);
+    transition: top var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    border-radius: 0 0 var(--radius-md) 0;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ========================================
+   3. 屏幕阅读器专用 (Screen Reader Only)
+   ======================================== */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 在聚焦时可见 */
+.sr-only-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: var(--spacing-2) var(--spacing-4);
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* ========================================
+   4. 高对比度模式 (High Contrast)
+   ======================================== */
+
+@media (prefers-contrast: high) {
+    :root {
+        --color-border-default: rgba(0, 0, 0, 0.5);
+        --color-border-strong: rgba(0, 0, 0, 0.8);
+    }
+
+    [data-theme="dark"] {
+        --color-border-default: rgba(255, 255, 255, 0.5);
+        --color-border-strong: rgba(255, 255, 255, 0.8);
+    }
+
+    button,
+    a,
+    input,
+    select,
+    textarea {
+        border-width: 2px !important;
+    }
+}
+
+/* ========================================
+   5. 减少数据模式 (Reduced Data)
+   ======================================== */
+
+@media (prefers-reduced-data: reduce) {
+
+    /* 禁用背景图片和大型装饰 */
+    .hero-section {
+        background-image: none !important;
+    }
+}
+
+/* ========================================
+   6. 键盘导航增强
+   ======================================== */
+
+/* 可聚焦元素的 tabindex 样式 */
+[tabindex="0"]:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* 禁用元素样式 */
+[disabled],
+[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* ========================================
+   7. ARIA 状态样式
+   ======================================== */
+
+/* 展开状态 */
+[aria-expanded="true"]>.expand-icon {
+    transform: rotate(180deg);
+}
+
+/* 选中状态 */
+[aria-selected="true"] {
+    background: var(--color-primary-50);
+    border-color: var(--color-primary-300);
+}
+
+/* 当前项 */
+[aria-current="page"],
+[aria-current="step"] {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-600);
+}
+
+/* 加载状态 */
+[aria-busy="true"] {
+    cursor: wait;
+}
+
+/* ========================================
+   8. 触摸目标优化 (Touch Targets)
+   ======================================== */
+
+/* 确保所有可点击元素满足 44x44px 最小尺寸 */
+@media (pointer: coarse) {
+
+    button,
+    a,
+    [role="button"],
+    [role="link"],
+    input[type="checkbox"],
+    input[type="radio"] {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* 紧凑按钮需要额外填充 */
+    .btn-sm,
+    .btn-xs {
+        padding: var(--spacing-2) var(--spacing-4);
+        min-height: 44px;
+    }
+}
+
+/* ========================================
+   9. 打印样式 (Print Styles)
+   ======================================== */
+
+@media print {
+
+    /* 隐藏非必要元素 */
+    nav,
+    .no-print,
+    button:not(.print-btn) {
+        display: none !important;
+    }
+
+    /* 优化打印样式 */
+    body {
+        color: #000;
+        background: #fff;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}

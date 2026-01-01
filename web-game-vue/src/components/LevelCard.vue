@@ -2,41 +2,26 @@
   <n-card
     hoverable
     class="level-card"
-    :class="{ completed, locked }"
+    :class="{ 'is-completed': completed }"
     @click="handleClick"
   >
     <div class="level-card-content">
-      <div class="level-icon">
-        <i :class="['fas', level.icon]"></i>
+      <div class="level-icon" :class="{ 'is-completed': completed }">
+        <n-icon v-if="completed" :component="CheckIcon" size="28" />
+        <n-icon v-else :component="PlayIcon" size="24" />
       </div>
       <div class="level-info">
-        <n-text strong>{{ level.name }}</n-text>
-        <n-text depth="3" style="font-size: 12px">
-          关卡 {{ level.id }}
-        </n-text>
+        <span class="level-name">{{ level.name }}</span>
+        <span class="level-id">关卡 {{ level.id }}</span>
       </div>
-      <div class="level-status">
-        <n-tag v-if="completed" type="success" size="small">
-          <template #icon>
-            <n-icon :component="CheckIcon" />
-          </template>
-          完成
-        </n-tag>
-        <n-tag v-else type="default" size="small">
-          <template #icon>
-            <n-icon :component="LockIcon" />
-          </template>
-          未完成
-        </n-tag>
-      </div>
+      <div v-if="completed" class="level-badge animate-checkmark">✓</div>
     </div>
   </n-card>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { NCard, NIcon, NText, NTag } from 'naive-ui'
-import { Check as CheckIcon, Lock as LockIcon } from '@vicons/fa'
+import { NCard, NIcon } from 'naive-ui'
+import { Check as CheckIcon, Play as PlayIcon } from '@vicons/fa'
 
 const props = defineProps({
   level: {
@@ -51,36 +36,49 @@ const props = defineProps({
 
 const emit = defineEmits(['select'])
 
-const locked = computed(() => !props.completed)
-
 function handleClick() {
   emit('select', props.level)
 }
 </script>
 
 <style scoped>
-@import '@/styles/cyber-terminal.css';
-
 .level-card {
   cursor: pointer;
-  transition: all 0.3s ease;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  transition: all var(--duration-base) var(--ease-out);
+  position: relative;
+  overflow: hidden;
 }
 
 .level-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 245, 255, 0.2);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.25);
+  border-color: var(--color-primary-400);
 }
 
-.level-card.completed {
-  border-color: var(--cyber-green);
+.level-card.is-completed {
+  border-color: var(--color-success);
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-elevated) 0%,
+    rgba(16, 185, 129, 0.05) 100%
+  );
+}
+
+.level-card.is-completed:hover {
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.2);
 }
 
 .level-card-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: var(--spacing-3);
   text-align: center;
+  padding: var(--spacing-2);
+  position: relative;
 }
 
 .level-icon {
@@ -89,22 +87,55 @@ function handleClick() {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--cyber-pink) 100%);
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-500) 0%,
+    var(--color-primary-600) 100%
+  );
+  color: #ffffff;
+  transition: all var(--duration-base) var(--ease-out);
 }
 
-.level-icon i {
-  font-size: 24px;
-  color: white;
+.level-icon.is-completed {
+  background: linear-gradient(135deg, var(--color-success) 0%, #059669 100%);
+}
+
+.level-card:hover .level-icon {
+  transform: scale(1.1);
 }
 
 .level-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--spacing-1);
 }
 
-.level-status {
-  margin-top: 4px;
+.level-name {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.level-id {
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  color: var(--color-text-tertiary);
+}
+
+.level-badge {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--color-success);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
 }
 </style>
